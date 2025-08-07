@@ -1,0 +1,55 @@
+<div th:fragment="_addAccount" xmlns:th="http://www.w3.org/1999/xhtml">
+    <!-- Modal -->
+    <div class="modal fade" id="addAccount" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="addAccountLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addAccountLabel">Add Account</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="form_addAccount">
+                    <div class="modal-body">
+
+                        <div class="d-flex flex-column gap-2">
+                            <span>Username<span class="text-danger">*</span></span>
+                            <input id="username" name="username" required class="form-control"/>
+
+                            <span>First Name<span class="text-danger">*</span></span>
+                            <input id="first_name" name="first_name" required class="form-control"/>
+
+                            <span>Middle Name</span>
+                            <input id="middle_name" name="middle_name" class="form-control"/>
+
+                            <span>Last Name<span class="text-danger">*</span></span>
+                            <input id="last_name" name="last_name" required class="form-control"/>
+
+                            <span>Email<span class="text-danger">*</span></span>
+                            <input type="email" id="email" name="email" required class="form-control"/>
+
+                            <span>Role<span class="text-danger">*</span></span>
+                            <select name="role_id" id="role_id" required class="form-select">
+                                <option selected value="" disabled>Select</option>
+                                <option value="1">Admin</option>
+                                <option value="2">Staff</option>
+                            </select>
+
+                            <span>Password<span class="text-danger">*</span></span>
+                            <input name="password" required id="password" type="password" class="form-control"/>
+                            <p id="error1" class="error d-none">Password must be at least 8 characters long</p>
+                            <span>Confirm Password<span class="text-danger">*</span></span>
+                            <input required id="confirmPassword" type="password" class="form-control"/>
+                            <p id="error2" class="error d-none">Confirm Password and New Password must be the same</p>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

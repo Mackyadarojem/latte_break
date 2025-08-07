@@ -1,0 +1,81 @@
+<div th:fragment="_stockInModal" xmlns:th="http://www.w3.org/1999/xhtml">
+    <!-- Modal -->
+    <div class="modal fade" id="stockInModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="stockInModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="stockInModalLabel">Stock In</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                                    aria-selected="true">Home
+                            </button>
+                            <button class="nav-link" id="nav-stockInHistory-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-stockInHistory" type="button" role="tab"
+                                    aria-controls="nav-stockInHistory"
+                                    aria-selected="true">Stock In History
+                            </button>
+                        </div>
+                    </nav>
+
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                             aria-labelledby="nav-home-tab" tabindex="0">
+                            <div class="mt-2 text-center">
+                                <h5>Item List</h5>
+                            </div>
+                            <div class="table-responsive mb-3">
+                                <table id="DT_ItemListForStockIn" class="table table-striped">
+                                    <thead>
+                                    <th>Item Name</th>
+                                    <th>Brand</th>
+                                    <th>Category</th>
+                                    <th>Description</th>
+                                    <th>Quantity to Stock In</th>
+                                    <th>UoM</th>
+                                    <th>Expiration Date</th>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show " id="nav-stockInHistory" role="tabpanel"
+                             aria-labelledby="nav-stockInHistory-tab" tabindex="0">
+                            <div class="text-center">
+                                <h5>Stock In History</h5>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="DT_StockInHistory" class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Batch Id</th>
+                                        <th>Item</th>
+                                        <th>Category</th>
+                                        <th>Brand</th>
+                                        <th>Description</th>
+                                        <th>Quantity Stocked In</th>
+                                        <th>Expiration Date</th>
+                                        <th>Encoded By</th>
+                                        <th>Encoded Date</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="btnStockIn" class="btn-primary btn">Stock In</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

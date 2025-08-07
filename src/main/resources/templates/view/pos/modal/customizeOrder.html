@@ -1,0 +1,96 @@
+<div th:fragment="_customizeOrder" xmlns:th="http://www.w3.org/1999/xhtml">
+    <!-- Modal -->
+    <div class="modal fade" id="customizeOrder" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="customizeOrderLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="customizeOrderLabel">Customize Order</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class=" modal-body">
+                    <div class="mb-2">
+                        <span>Add Ons</span>
+                    </div>
+                    <div class=" d-flex flex-row flex-wrap">
+                        <div class="form-check col-6">
+                            <input name="addOns" class="form-check-input" type="checkbox" data-name="Expresso Shot" data-price="50" id="espressoShot">
+                            <label class="form-check-label" for="espressoShot">
+                                ESPRESSO SHOT - ₱50
+                            </label>
+                        </div>
+                        <div class="form-check col-6">
+                            <input name="addOns" class="form-check-input" type="checkbox" data-name="Whipped Cream" data-price="30" id="whippedCream">
+                            <label class="form-check-label" for="whippedCream">
+                                WHIPPED CREAM - ₱30
+                            </label>
+                        </div>
+                        <div class="form-check col-6">
+                            <input name="addOns" class="form-check-input" type="checkbox" data-name="Sauce(Grizzle)" data-price="30" id="sauce">
+                            <label class="form-check-label" for="sauce">
+                                SAUCE(GRIZZLE)- ₱30
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <span>Ice</span>
+                    </div>
+                    <div class=" d-flex flex-row flex-wrap">
+                        <div class="form-check col-4">
+                            <input checked name="ice" class="form-check-input" type="radio" value="No Ice" id="noIce">
+                            <label class="form-check-label" for="noIce">
+                                No Ice
+                            </label>
+                        </div>
+                        <div class="form-check col-4">
+                            <input name="ice" class="form-check-input" type="radio" value="Less Ice" id="lessIce">
+                            <label class="form-check-label" for="lessIce">
+                                Less Ice
+                            </label>
+                        </div>
+                        <div class="form-check col-4">
+                            <input name="ice" class="form-check-input" type="radio" value="More Ice" id="moreIce">
+                            <label class="form-check-label" for="moreIce">
+                                More Ice
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="mb-2 d-flex ">
+                        <span>Sugar Level</span>
+                    </div>
+                    <div class=" d-flex flex-row flex-wrap">
+                        <div class="form-check col-3">
+                            <input checked name="sugar" class="form-check-input" type="radio" value="25%" id="25%">
+                            <label class="form-check-label" for="25%">
+                                25%
+                            </label>
+                        </div>
+                        <div class="form-check col-3">
+                            <input name="sugar" class="form-check-input" type="radio" value="50%" id="50%">
+                            <label class="form-check-label" for="50%">
+                                50%
+                            </label>
+                        </div>
+                        <div class="form-check col-3">
+                            <input name="sugar" class="form-check-input" type="radio" value="75%" id="75%">
+                            <label class="form-check-label" for="75%">
+                                75%
+                            </label>
+                        </div>
+                        <div class="form-check col-3">
+                            <input name="sugar" class="form-check-input" type="radio" value="100%" id="100%">
+                            <label class="form-check-label" for="100%">
+                                100%
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="addToCart" type="button" class="btn btn-primary">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

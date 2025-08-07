@@ -1,0 +1,32 @@
+<div th:fragment="_otp" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="modal fade" id="otp" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="otpLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="otpLabel">Input OTP Code</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form_otp">
+                        <div class="d-flex justify-content-center m-3">
+                            <input type="text" maxlength="1" class="text-center form-control otp-input" required/>
+                            <input type="text" maxlength="1" class="text-center form-control otp-input" required/>
+                            <input type="text" maxlength="1" class="text-center form-control otp-input" required/>
+                            <input type="text" maxlength="1" class="text-center form-control otp-input" required/>
+                        </div>
+                        <span class="text-danger otpError d-none">Invalid OTP! Please try again</span>
+                        <div class="d-flex mt-2 justify-content-between">
+                            <div class="d-flex flex-column">
+                                <button class="resendOtp btn btn-secondary" type="button">Resend OTP Code</button>
+                                <span class="text-success otpResend d-none">OTP Code successfully sent!</span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Verify</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

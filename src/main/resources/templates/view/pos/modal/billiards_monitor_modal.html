@@ -1,0 +1,32 @@
+<div th:fragment="_billiards_monitor_modal" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="modal fade" id="billiards_monitor_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+         tabindex="-1"
+         aria-labelledby="billiards_monitor_modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="billiards_monitor_modalLabel">Pool Play Monitor</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table id="DT_PoolPlayMonitor" class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Customer</th>
+                                <th>Duration</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

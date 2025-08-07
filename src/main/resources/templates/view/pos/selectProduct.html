@@ -1,0 +1,383 @@
+<div th:fragment="_selectProduct" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="nav-container d-flex flex-wrap">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item active" role="presentation">
+                <button class="nav-link active" id="tab0" data-bs-toggle="tab"
+                        data-bs-target="#tab-pane0" type="button" role="tab"
+                        aria-controls="tab-pane0" aria-selected="true">ALL
+                </button>
+            </li>
+            <th:block th:each="category : ${category}">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" th:id="tab + ${category.category_id}" data-bs-toggle="tab"
+                            th:data-bs-target="'#tab-pane' + ${category.category_id}" type="button" role="tab"
+                            th:aria-controls="tab-pane + ${category.category_id}" aria-selected="true"
+                            th:text="${category.category_name}">
+                    </button>
+                </li>
+            </th:block>
+        </ul>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class=" col-sm-8 mb-3 col-12">
+                    <!-- products	 -->
+                    <div class=" products  mt-3">
+                        <div id="card-container" class="gap-2 justify-content-center d-flex flex-row flex-wrap">
+
+                            <div class="tab-content" id="myTabContent">
+
+                                <!--ALL-->
+                                <div class="tab-pane fade show active" id="tab-pane0"
+                                     role="tabpanel" aria-labelledby="tab0" tabindex="0">
+                                    <div class="d-flex flex-wrap gap-3">
+                                        <th:block th:each="data : ${data}" class="row">
+                                            <div class="card" style="width: 18rem;">
+                                                <div class="card-body">
+                                                    <input type="hidden" th:id="productName + ${data.id}"
+                                                           th:value="${data.name}"/>
+                                                    <input type="hidden" th:id="priceMedium + ${data.id}"
+                                                           th:value="${data.priceMedium}"/>
+                                                    <input type="hidden" th:id="priceLarge + ${data.id}"
+                                                           th:value="${data.priceLarge}"/>
+                                                    <input type="hidden" th:id="drink + ${data.id}"
+                                                           th:value="${data.drink}"/>
+
+                                                    <h5 class="card-title text-center"
+                                                        th:text="${data.name}"></h5>
+
+                                                    <th:block th:if="${data.drink == true}">
+
+                                                        <th:block th:if="${data.size == 4}">
+                                                            <h5 class="mb-2"
+                                                                th:text="${data.priceMedium} + ' (M) - ' + ${data.priceLarge} + ' (L)'">
+                                                            </h5>
+                                                        </th:block>
+                                                        <th:block th:if="${data.size == 2}">
+                                                            <h5 class="mb-2"
+                                                                th:text="${data.priceMedium} + ' (M)">
+                                                            </h5>
+                                                        </th:block>
+                                                        <th:block th:if="${data.size == 3}">
+                                                            <h5 class="mb-2"
+                                                                th:text="${data.priceLarge} + ' (L)' ">
+                                                            </h5>
+                                                        </th:block>
+
+                                                        <div class="d-flex gap-2 mb-2 flex-row justify-content-start">
+                                                            <th:block th:if="${data.size == 4}">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input "
+                                                                           type="radio"
+                                                                           value="medium"
+                                                                           th:name="1size + ${data.id}"
+                                                                           th:id="1medium + ${data.id}"
+                                                                           th:checked="${data.size == 4}"/>
+                                                                    <label th:for="1medium + ${data.id}"
+                                                                           class="form-check-label">
+                                                                        Medium
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input"
+                                                                           type="radio"
+                                                                           value="large"
+                                                                           th:name="1size + ${data.id}"
+                                                                           th:id="1large + ${data.id}"/>
+                                                                    <label th:for="1large + ${data.id}"
+                                                                           class="form-check-label">
+                                                                        Large
+                                                                    </label>
+                                                                </div>
+                                                            </th:block>
+
+                                                            <th:block th:if="${data.size == 2}">
+                                                                <div class="form-check">
+                                                                    <input checked class="form-check-input "
+                                                                           type="radio"
+                                                                           value="medium"
+                                                                           th:name="1size + ${data.id}"
+                                                                           th:id="1medium + ${data.id}"/>
+                                                                    <label th:for="1medium + ${data.id}"
+                                                                           class="form-check-label">
+                                                                        Medium
+                                                                    </label>
+                                                                </div>
+                                                            </th:block>
+
+                                                            <th:block th:if="${data.size == 3}">
+                                                                <div class="form-check">
+                                                                    <input th:checked="${data.size == 3}"
+                                                                           class="form-check-input"
+                                                                           type="radio"
+                                                                           value="large"
+                                                                           th:name="1size + ${data.id}"
+                                                                           th:id="1large + ${data.id}"/>
+                                                                    <label th:for="1large + ${data.id}"
+                                                                           class="form-check-label">
+                                                                        Large
+                                                                    </label>
+                                                                </div>
+                                                            </th:block>
+                                                        </div>
+
+                                                        <div class="d-flex gap-2 justify-content-start flex-row">
+                                                            <div class="form-check">
+                                                                <input checked class="form-check-input "
+                                                                       type="radio"
+                                                                       value="hot"
+                                                                       th:name="1type + ${data.id}"
+                                                                       th:id="1hot + ${data.id}"/>
+                                                                <label th:for="1hot + ${data.id}"
+                                                                       class="form-check-label">
+                                                                    Hot
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input "
+                                                                       type="radio"
+                                                                       value="iced"
+                                                                       th:name="1type + ${data.id}"
+                                                                       th:id="1iced + ${data.id}"/>
+                                                                <label th:for="1iced + ${data.id}"
+                                                                       class="form-check-label">
+                                                                    Iced
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </th:block>
+
+                                                    <th:block th:if="${data.drink != true}">
+                                                        <h5 class="mb-2"
+                                                            th:text="${data.price}">
+                                                        </h5>
+                                                    </th:block>
+
+                                                    <div class="d-flex mb-2 gap-2 align-items-center">
+                                                        <span>Qty</span>
+                                                        <input th:id="'quantity' + ${data.id}"
+                                                               class="form-control"
+                                                               type="number" value="1" min="1"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card-footer">
+                                                    <button th:data-id="${data.id}"
+                                                            class="w-100 addToCart btn btn-warning">
+                                                        <span>Add to Cart</span>
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </th:block>
+                                    </div>
+                                </div>
+
+                                <!--BY CATEGORY-->
+                                <th:block th:each="category : ${category}">
+                                    <div class="tab-pane fade" th:id="tab-pane + ${category.category_id}"
+                                         role="tabpanel"
+                                         th:aria-labelledby="tab + ${category.category_id}" tabindex="0">
+                                        <div class="d-flex flex-wrap gap-3">
+                                            <th:block th:each="data : ${data}" class="row">
+                                                <th:block th:if="${category.category_id == data.category_id}">
+                                                    <div class="card" style="width: 18rem;">
+                                                        <div class="card-body">
+                                                            <input type="hidden" th:id="productName + ${data.id}"
+                                                                   th:value="${data.name}"/>
+                                                            <input type="hidden" th:id="priceMedium + ${data.id}"
+                                                                   th:value="${data.priceMedium}"/>
+                                                            <input type="hidden" th:id="priceLarge + ${data.id}"
+                                                                   th:value="${data.priceLarge}"/>
+                                                            <input type="hidden" th:id="price + ${data.id}"
+                                                                   th:value="${data.price}"/>
+                                                            <input type="hidden" th:id="drink + ${data.id}"
+                                                                   th:value="${data.drink}"/>
+
+                                                            <h5 class="card-title text-center"
+                                                                th:text="${data.name}"></h5>
+
+                                                            <th:block th:if="${data.drink == true}">
+
+                                                                <th:block th:if="${data.size == 4}">
+                                                                    <h5 class="mb-2"
+                                                                        th:text="${data.priceMedium} + ' (M) - ' + ${data.priceLarge} + ' (L)'">
+                                                                    </h5>
+                                                                </th:block>
+                                                                <th:block th:if="${data.size == 2}">
+                                                                    <h5 class="mb-2"
+                                                                        th:text="${data.priceMedium} + ' (M)">
+                                                                    </h5>
+                                                                </th:block>
+                                                                <th:block th:if="${data.size == 3}">
+                                                                    <h5 class="mb-2"
+                                                                        th:text="${data.priceLarge} + ' (L)' ">
+                                                                    </h5>
+                                                                </th:block>
+
+                                                                <div class="d-flex gap-2 mb-2 flex-row justify-content-start">
+                                                                    <th:block th:if="${data.size == 4}">
+                                                                        <div class="form-check">
+                                                                            <input checked class="form-check-input "
+                                                                                   type="radio"
+                                                                                   value="medium"
+                                                                                   th:name="size + ${data.id}"
+                                                                                   th:id="medium + ${data.id}"/>
+                                                                            <label th:for="medium + ${data.id}"
+                                                                                   class="form-check-label">
+                                                                                Medium
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input"
+                                                                                   type="radio"
+                                                                                   value="large"
+                                                                                   th:name="size + ${data.id}"
+                                                                                   th:id="large + ${data.id}"/>
+                                                                            <label th:for="large + ${data.id}"
+                                                                                   class="form-check-label">
+                                                                                Large
+                                                                            </label>
+                                                                        </div>
+                                                                    </th:block>
+
+                                                                    <th:block th:if="${data.size == 2}">
+                                                                        <div class="form-check">
+                                                                            <input checked class="form-check-input "
+                                                                                   type="radio"
+                                                                                   value="medium"
+                                                                                   th:name="size + ${data.id}"
+                                                                                   th:id="medium + ${data.id}"/>
+                                                                            <label th:for="medium + ${data.id}"
+                                                                                   class="form-check-label">
+                                                                                Medium
+                                                                            </label>
+                                                                        </div>
+                                                                    </th:block>
+
+                                                                    <th:block th:if="${data.size == 3}">
+                                                                        <div class="form-check">
+                                                                            <input checked class="form-check-input"
+                                                                                   type="radio"
+                                                                                   value="large"
+                                                                                   th:name="size + ${data.id}"
+                                                                                   th:id="large + ${data.id}"/>
+                                                                            <label th:for="large + ${data.id}"
+                                                                                   class="form-check-label">
+                                                                                Large
+                                                                            </label>
+                                                                        </div>
+                                                                    </th:block>
+                                                                </div>
+
+                                                                <div class="d-flex gap-2 justify-content-start flex-row">
+                                                                    <div class="form-check">
+                                                                        <input checked class="form-check-input "
+                                                                               type="radio"
+                                                                               value="hot"
+                                                                               th:name="type + ${data.id}"
+                                                                               th:id="hot + ${data.id}"/>
+                                                                        <label th:for="hot + ${data.id}"
+                                                                               class="form-check-label">
+                                                                            Hot
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input "
+                                                                               type="radio"
+                                                                               value="iced"
+                                                                               th:name="type + ${data.id}"
+                                                                               th:id="iced + ${data.id}"/>
+                                                                        <label th:for="iced + ${data.id}"
+                                                                               class="form-check-label">
+                                                                            Iced
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </th:block>
+
+                                                            <th:block th:if="${data.drink != true}">
+                                                                <h5 class="mb-2"
+                                                                    th:text="${data.price}">
+                                                                </h5>
+                                                            </th:block>
+
+                                                            <div class="d-flex mb-2 gap-2 align-items-center">
+                                                                <span>Qty</span>
+                                                                <input th:id="'quantity' + ${data.id}"
+                                                                       class="form-control"
+                                                                       type="number" value="1" min="1"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-footer">
+                                                            <button th:data-id="${data.id}"
+                                                                    class="w-100 addToCart btn btn-warning">
+                                                                <span>Add to Cart</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </th:block>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-3 col-sm-4 col-12 rounded">
+                    <div class="flex-column d-flex gap-2">
+                        <div class="text-center">
+                            <h5>Order Summary</h5>
+                        </div>
+
+                        <div id="cartContainer">
+
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex gap-2 justify-content-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="serviceType" id="dineIn"
+                                               value="Dine In">
+                                        <label class="form-check-label" for="dineIn">Dine In</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="serviceType" id="takeOut"
+                                               value="Take Out" checked>
+                                        <label class="form-check-label" for="takeOut">Take Out</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex gap-2 flex-column">
+                                <span>Sub Total : <strong>₱</strong><span id="subTotal"
+                                                                          class="fw-bold">0.00</span></span>
+                                    <span>Discount : <strong>₱</strong><span id="totalDiscount" data-discount="0"
+                                                                             class="fw-bold">0.00</span></span>
+                                    <span class="my-3">Total : <strong>₱</strong><span id="total"
+                                                                                       class="fw-bold">0.00</span></span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <button id="btn_voidTransaction" class="btn btn-danger">Void Transaction</button>
+                                    <button id="placeHolder" class="btn btn-primary">Place Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+</div>

@@ -1,0 +1,100 @@
+<div th:fragment="_layout-menu" id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme"
+     xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="app-brand demo">
+        <a th:href="@{/home}" class="app-brand-link mt-4">
+            <span class="app-brand-logo demo"></span>
+            <span class="app-brand-text demo menu-text fw-bold ms-2">LATTÉ BREAK</span>
+            <hr>
+        </a>
+
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+            <i class="bx bx-chevron-left bx-sm d-flex align-items-center justify-content-center"></i>
+        </a>
+    </div>
+
+    <div class="menu-inner-shadow"></div>
+
+    <ul class="menu-inner py-1">
+        <li class="menu-item">
+            <a href="" th:href="@{/home}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                <div class="text-truncate" data-i18n="Dashboard">Dashboard</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="" th:href="@{/pos}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-money"></i>
+                <div class="text-truncate" data-i18n="POS">POS</div>
+            </a>
+        </li>
+
+        <li class="menu-item">
+            <a href="" th:href="@{/transactionList}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-history"></i>
+                <div class="text-truncate" data-i18n="Transaction History">Transaction History</div>
+            </a>
+        </li>
+
+        <th:block th:if="${session.role_id == 1}">
+            <li class="menu-item">
+                <a href="" th:href="@{/event_management}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-calendar"></i>
+                    <div class="text-truncate" data-i18n="Transaction History">Event Management</div>
+                </a>
+            </li>
+        </th:block>
+
+        <th:block th:if="${session.role_id == 1}">
+            <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">Inventory</span>
+            </li>
+            <li class="menu-item">
+                <a href="" th:href="@{/productList}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bxs-drink"></i>
+                    <div class="text-truncate" data-i18n="Product List">Product Management</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="" th:href="@{/itemList}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-package"></i>
+                    <div class="text-truncate" data-i18n="Item List">Item Management</div>
+                </a>
+            </li>
+        </th:block>
+
+        <th:block th:if="${session.role_id == 1}">
+            <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">Reports</span>
+            </li>
+            <li class="menu-item">
+                <a href="" th:href="@{/reports}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-bar-chart"></i>
+                    <div class="text-truncate" data-i18n="Inventory Report">Report Management</div>
+                </a>
+            </li>
+        </th:block>
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Accounts & Settings</span>
+        </li>
+        <li class="menu-item">
+            <a href="" th:href="@{/changePass}" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-key"></i>
+                <div class="text-truncate" data-i18n="Change Password">Change Password</div>
+            </a>
+        </li>
+        <th:block th:if="${session.role_id == 1}">
+            <li class="menu-item">
+                <a href="" th:href="@{/accountList}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bxs-user-account"></i>
+                    <div class="text-truncate" data-i18n="CHANGE PASSWORD">Accounts Management</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="" th:href="@{/archive}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-archive-in"></i>
+                    <div class="text-truncate" data-i18n="CHANGE PASSWORD">Archived List</div>
+                </a>
+            </li>
+        </th:block>
+    </ul>
+</div>

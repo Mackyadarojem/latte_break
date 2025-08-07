@@ -1,0 +1,25 @@
+<div th:fragment="_checkEmail" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="modal fade" id="checkEmail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="checkEmailLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="checkEmailLabel">Enter Your Email Address</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="form_checkEmail">
+                    <div class="modal-body">
+                        <div class="d-flex gap-2 align-items-center flex-row">
+                            <span class="">Email<span class="text-danger">*</span></span>
+                            <input type="email" required id="email" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="next" type="submit" class="btn btn-primary">Next</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

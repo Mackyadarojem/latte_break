@@ -1,0 +1,14 @@
+
+.input-container {
+  position: relative;
+}
+
+.input-container .field-icon {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #aaa;
+  z-index: 2;
+}

@@ -1,0 +1,59 @@
+<div th:fragment="_inventoryReport" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div>
+        <form>
+            <div class="col-6 d-flex flex-column gap-2">
+                <span>Date</span>
+                <div class="d-flex gap-2">
+                    <input class="form-control" type="date"/>
+                    <input class="form-control" type="date"/>
+                </div>
+                <span>Category</span>
+                <select name="inventoryCategory" class="col-6 form-select">
+                    <option value="0">All</option>
+                    <option th:each="category : ${itemCategory}"
+                            th:text="${category.category_name}"
+                            th:value="${category.category_id}">
+                    </option>
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <div class="text-start d-flex align-items-start justify-content-start">
+        <button class="btn  mt-2 btn-outline-primary"><span>GENERATE REPORT&nbsp;</span>
+        </button>
+    </div>
+
+    <div class="table-responsive">
+        <table id="DT_InventoryReport" class="table">
+            <thead>
+            <tr class="text-center">
+                <th>Item Code</th>
+                <th>Item Name</th>
+                <th>Category</th>
+                <th>Unit Measurement</th>
+                <th>Available Stock</th>
+                <th>Expiration Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>ITEM-1</td>
+                <td>Chair</td>
+                <td>Furniture</td>
+                <td>piece</td>
+                <td>10</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>ITEM-2</td>
+                <td>Chicken</td>
+                <td>Frozen Goods</td>
+                <td>pack</td>
+                <td>10</td>
+                <td>2025-06-21</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

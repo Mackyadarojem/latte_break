@@ -1,0 +1,61 @@
+<div th:fragment="_salesReport" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div>
+        <form>
+            <div class="col-6 d-flex flex-column gap-2">
+                <span>Date</span>
+                <div class="d-flex gap-2">
+                    <input class="form-control" type="date">
+                    <input class="form-control" type="date">
+                </div>
+                <span>Category</span>
+                <select name="salesCategory" class="col-6 form-select">
+                    <option value="0">All</option>
+                    <option th:each="category : ${category}"
+                            th:text="${category.category_name}"
+                            th:value="${category.category_id}">
+                    </option>
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <div class="text-start d-flex align-items-start justify-content-start">
+        <button class="btn  mt-2 btn-outline-primary"><span>GENERATE REPORT&nbsp;</span>
+        </button>
+    </div>
+
+    <div class="table-responsive">
+        <table id="DT_SalesReport" class="table table-striped">
+            <thead>
+            <tr class="text-center">
+                <th>Product Name</th>
+                <th>Product Category</th>
+                <th>Items Sold</th>
+                <th>Total Sales Without Discount</th>
+                <th>Total Sales Per Product</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Capuccino</td>
+                <td>Drinks</td>
+                <td>5</td>
+                <td>₱7,000.00</td>
+                <td>₱7,000.00</td>
+            </tr>
+            <tr>
+                <td>Chicken Wings</td>
+                <td>Wings</td>
+                <td>5</td>
+                <td>₱7,000.00</td>
+                <td>₱7,000.00</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-3 d-flex flex-row justify-content-between">
+        <span><strong>Gross Total:</strong> ₱14,000.00</span>
+        <span><strong>Checkout Discount:</strong> ₱0.00</span>
+        <span><strong>Net Sales:</strong>    ₱14,000.00</span>
+    </div>
+</div>

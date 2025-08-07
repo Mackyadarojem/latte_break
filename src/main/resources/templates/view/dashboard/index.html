@@ -1,0 +1,251 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      dir="ltr"
+      data-theme="theme-default"
+      th:data-assets-path="@{/app-assets/}"
+      data-template="vertical-menu-template"
+      data-style="light">
+
+<head>
+    <title>Latte Break</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{images/logo.jpg}"/>
+    <link th:href="@{assets/bootstrap-5.3.3-dist/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{assets/fontawesome-free-6.7.2-web/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{assets/dist/apexcharts.css}">
+    <link rel="stylesheet" th:href="@{assets/css/index.css}">
+    <link rel="stylesheet" th:href="@{/vendor/css/rtl/core.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/css/rtl/theme-default.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/fonts/boxicons.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/fonts/fontawesome.css}"/>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script th:src="@{assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{assets/js/jquery.min.js}"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+</head>
+
+<body>
+<style>
+    #calendar .ui-datepicker {
+       width: 100% !important;
+    }
+</style>
+<!-- Wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <div th:replace="~{layout/menu :: _layout-menu}"></div>
+
+        <!-- Header -->
+        <div class="layout-page">
+            <div th:replace="~{layout/header :: _header}"></div>
+            <div class="content-wrapper">
+                <div id="frag_container" class="container-xxl flex-grow-1 container-p-y">
+                    <div class="card">
+
+                        <div class="card-header">
+                            <div class="card-title"><h4>DASHBOARD</h4></div>
+                            <hr>
+                        </div>
+
+                        <input type="hidden" id="role_id" th:value="${session.role_id}">
+
+                        <div class="card-body">
+                            <div class="card w-100">
+                                <div class="card-body">
+                                    <div class="">
+                                        <h5>Search</h5>
+                                    </div>
+                                    <div class="w-100">
+                                        <input class="form-control" type="text" id="searchInput"
+                                               placeholder="Input keyword here..." autocomplete="off">
+                                        <div class="mt-2" id="results"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-2 w-100 d-flex flex-md-row flex-column gap-2 flex-nowrap">
+
+                                <div class="card w-100">
+                                    <div class="card-body">
+                                        <h5>Recent Orders</h5>
+                                        <div class="table-responsive"
+                                             style="height: 100%; width: 100%; overflow: hidden;">
+                                            <table class="table table-hover table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Order No.</th>
+                                                    <th>Table No.</th>
+                                                    <th>Status</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody style="white-space:nowrap;">
+                                                <tr>
+                                                    <td>Order-20250228-3</td>
+                                                    <td>#3</td>
+                                                    <td class="text-success">Completed</td>
+                                                    <td><strong>₱712</strong><br>10:15am</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Order-20250228-2</td>
+                                                    <td>#1</td>
+                                                    <td class="text-warning">In Progress</td>
+                                                    <td><strong>₱712</strong><br>10:15am</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Order-20250228-1</td>
+                                                    <td>#2</td>
+                                                    <td class="text-danger">Cancelled</td>
+                                                    <td><strong>₱712</strong><br>10:15am</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-2 w-100 h-50 d-flex flex-md-row flex-column gap-2 flex-nowrap">
+                                <div class="card w-100">
+                                    <div class="card-body">
+                                        <div class="text-start">
+                                            <h4>BEST SELLER</h4>
+                                        </div>
+                                        <div style="max-height: 300px; overflow-y: auto;" class="d-flex flex-column gap-2">
+                                            <div class="d-flex flex-column border-bottom">
+                                                <span class="fw-bold text-primary">All</span>
+                                                <div class="d-flex w-100">
+                                                    <span class="text-muted col-4">1. Caramel Machiatto</span>
+                                                    <span class="text-muted col-4">2. Java Chip</span>
+                                                    <span class="text-muted col-4">3. Tapsilog</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column border-bottom">
+                                                <span class="fw-bold text-success">Signature Coffee</span>
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <span class="text-muted col-4">1. Caramel Machiatto</span>
+                                                    <span class="text-muted col-4">2. Java Chip</span>
+                                                    <span class="text-muted col-4">3. Spannish Latte</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column border-bottom">
+                                                <span class="fw-bold text-warning">Frappe</span>
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <span class="text-muted col-4">1. Caramel Machiatto</span>
+                                                    <span class="text-muted col-4">2. Java Chip</span>
+                                                    <span class="text-muted col-4">3. Spannish Latte</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column border-bottom">
+                                                <span class="fw-bold text-danger">Hot Coffee</span>
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <span class="text-muted col-4">1. Americano</span>
+                                                    <span class="text-muted col-4">2. Dark Choco</span>
+                                                    <span class="text-muted col-4">3. Caramel Machiatto</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column border-bottom">
+                                                <span class="fw-bold text-info">Non Coffee</span>
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <span class="text-muted col-4">1. Hershey Choco</span>
+                                                    <span class="text-muted col-4">2. Dark Choco</span>
+                                                    <span class="text-muted col-4">3. Strawberry Milk</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column border-bottom">
+                                                <span class="fw-bold text-primary">Croffles</span>
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <span class="text-muted col-4">1. Break Croffles</span>
+                                                    <span class="text-muted col-4">2. Oreo Locco</span>
+                                                    <span class="text-muted col-4">3. Ham & Cheese</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column border-bottom">
+                                                <span class="fw-bold text-success">Cookies</span>
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <span class="text-muted col-4">1. Chocolate Chips</span>
+                                                    <span class="text-muted col-4">2. Oreo Blast</span>
+                                                    <span class="text-muted col-4">3. Red Velvet</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column border-bottom">
+                                                <span class="fw-bold text-warning">Rice Meal</span>
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <span class="text-muted col-4">1. Pure Beef Tapsilog</span>
+                                                    <span class="text-muted col-4">2. Baconsilog</span>
+                                                    <span class="text-muted col-4">3. Tosilog</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column border-bottom">
+                                                <span class="fw-bold text-danger">Budget Meal</span>
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <span class="text-muted col-4">1. Siomaisilog</span>
+                                                        <span class="text-muted col-4">2. Tuna Pesto</span>
+                                                    <span class="text-muted col-4">3. Carbonara</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column border-bottom">
+                                                <span class="fw-bold text-danger">Pasta</span>
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <span class="text-muted col-4">1. Beef Lasagna</span>
+                                                    <span class="text-muted col-4">2. Tuna Pesto</span>
+                                                    <span class="text-muted col-4">3. Carbonara</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column border-bottom">
+                                            <span class="fw-bold text-info">Finger Foods</span>
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <span class="text-muted col-4">1. Beef Tacos</span>
+                                                <span class="text-muted col-4">2. Chicken Finger</span>
+                                                <span class="text-muted col-4">3. Overload Fries</span>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <a th:href="@{/pos}" class="btn w-100 btn-outline-primary">GO TO POS</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card w-100">
+                                    <div class="card-body">
+                                        <div class="text-start">
+                                            <h4>CALENDAR SCHEDULE</h4>
+                                        </div>
+                                        <div id="calendar" class="w-100"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Helpers -->
+<script src="" th:src="@{/app-assets/vendor/js/helpers.js}"></script>
+<script src="" th:src="@{/app-assets/vendor/js/template-customizer.js}"></script>
+<script src="" th:src="@{/app-assets/js/config.js}"></script>
+
+<script src="" th:src="@{/app-assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
+<script src="" th:src="@{/app-assets/vendor/libs/hammer/hammer.js}"></script>
+<script src="" th:src="@{/app-assets/vendor/libs/typeahead-js/typeahead.js}"></script>
+<script src="" th:src="@{/app-assets/vendor/libs/select2/select2.js}"></script>
+<script src="" th:src="@{/app-assets/vendor/libs/jquery-mask-plugin/jquery.mask.min.js}"></script>
+<script src="" th:src="@{/app-assets/vendor/js/menu.js}"></script>
+
+<!-- Scripts -->
+<script th:src="@{/app-assets/vendor/js/menu.js}"></script>
+<script th:src="@{/app-assets/js/main.js}"></script>
+<script th:src="@{assets/dist/apexcharts.min.js}"></script>
+<script th:src="@{assets/js/index.js}"></script>
+<script src="" th:src="@{/assets/base/global.js}"></script>
+<script src="" th:src="@{/assets/base/base.js}"></script>
+
+</body>
+
+</html>

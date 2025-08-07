@@ -1,0 +1,66 @@
+<div th:fragment="_itemModal" xmlns:th="http://www.w3.org/1999/xhtml">
+    <!-- Modal -->
+    <div class="modal fade" id="itemModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="itemModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="itemModalLabel"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="form_item">
+                    <div class="modal-body">
+                        <input type="hidden" name="method" id="method">
+                        <input type="hidden" name="id" id="id"/>
+                        <div class="form-group">
+                            <label for="name">Item Name<span class="text-danger">*</span></label>
+                            <input name="name" required id="name" class="form-control"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="brand">Brand Name</label>
+                            <input name="brand" id="brand" class="form-control"/>
+                        </div>
+
+                        <div class=" form-group">
+                            <label for="category_id">Category<span class="text-danger">*</span></label>
+                            <select required class="form-select" name="category_id" id="category_id">
+                                <option value="">Select</option>
+                                <option th:each="category : ${category}"
+                                        th:text="${category.category_name}"
+                                        th:value="${category.category_id}"></option>
+                            </select>
+                        </div>
+
+                        <div class=" form-group">
+                            <label for="unit">Unit Measurment<span class="text-danger">*</span></label>
+                            <input name="unit" required placeholder="kg,pcs,grams,etc.." id="unit"
+                                   class="form-control"/>
+                            <p  class="text-muted fw-italic">E.g. grams, oz, liters,packs,sacks,etc</p>
+                        </div>
+                        <div class=" form-group">
+                            <label for="critical_quantity">Critical Quantity<span class="text-danger">*</span></label>
+                            <input name="critical_quantity" required type="number" id="critical_quantity"
+                                   class="form-control"/>
+                            <p  class="text-muted fw-italic">if the item's total quantity is equal or below this number, the system will consider this as critical quantity and notify the user</p>
+                        </div>
+
+                        <div class=" form-group">
+                            <label for="description">Description</label>
+                            <textarea name="description" id="description" class="form-control"></textarea>
+                        </div>
+
+                        <div class="mt-2 form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="expire">
+                            <label class="form-check-label" for="expire">Will Expire?</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

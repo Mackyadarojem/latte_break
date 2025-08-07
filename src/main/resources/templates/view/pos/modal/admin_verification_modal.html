@@ -1,0 +1,28 @@
+<div th:fragment="_admin_verification_modal" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="modal fade" id="admin_verification_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+         tabindex="-1"
+         aria-labelledby="admin_verification_modal_label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="admin_verification_modal_label">Admin Verify Password</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="form_verifyPassword">
+                    <div class=" modal-body">
+                        <div class="form-group">
+                            <input id="selectedId" class="form-control" type="hidden"/>
+                            <label for="admin_password">Input Password :</label>
+                            <input required id="admin_password" class="form-control" type="password" />
+                            <small class="text-danger d-none adminError">Incorrect Password</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" id="btn_verifyPassword" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

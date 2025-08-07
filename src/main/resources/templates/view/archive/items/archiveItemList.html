@@ -1,0 +1,43 @@
+<div th:fragment="_archiveItemList" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <div>
+        <form id="form_searchArchiveItem">
+            <div class="col-6">
+                <span>Name</span>
+                <input name="name" class="col-6 form-control">
+            </div>
+            <div class="col-6">
+                <span>Category</span>
+                <select name="category_id" class="col-6 form-select">
+                    <option value="0">Select</option>
+                    <option th:each="category : ${itemCategory}"
+                            th:text="${category.category_name}"
+                            th:value="${category.category_id}">
+                    </option>
+                </select>
+            </div>
+            <div class="mt-2">
+                <button type="submit" class="btn btn-primary">Search</button>
+                <button id="btnClear" type="button" class="btn btn-secondary">Clear</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table id="DT_ArchiveList" class="w-100 table table-striped">
+            <thead>
+            <tr class="text-center">
+                <th>Action</th>
+                <th>Item Name</th>
+                <th>Category</th>
+                <th>Brand Name</th>
+                <th>Archived Date</th>
+                <th>Archived By</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+</div>

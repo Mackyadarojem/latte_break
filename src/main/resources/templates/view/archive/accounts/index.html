@@ -1,0 +1,44 @@
+<div th:fragment="_archivedAccountList" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div>
+        <form id="form_searchArchiveAccount">
+            <div class="col-6">
+                <span>Name</span>
+                <input name="full_name" class="form-control">
+            </div>
+            <div class="col-6">
+                <span>Username</span>
+                <input name="username" class="form-control">
+            </div>
+            <div class="col-6">
+                <span>Role</span>
+                <select name="role_id" class="form-select">
+                    <option selected value="0" disabled>Select</option>
+                    <option value="1">Admin</option>
+                    <option value="2">Staff</option>
+                </select>
+            </div>
+            <div class="col-6 mt-2">
+                <button type="submit" class="btn btn-primary"><span>Search</span></button>
+                <button type="button" id="btnClear" class="btn btn-secondary"><span>Clear</span>
+                </button>
+            </div>
+        </form>
+    </div>
+    <hr>
+
+    <div class="table-responsive">
+        <table id="DT_ArchiveAccount" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Action</th>
+                <th>User Id</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Data of Archived</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>

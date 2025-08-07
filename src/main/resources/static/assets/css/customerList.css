@@ -1,0 +1,20 @@
+label{
+    font-family: "Roboto Slab", serif;
+    font-weight: 400;
+}
+
+span{
+    font-family: "Roboto Slab", serif;
+    font-weight: 400;
+}
+
+th{
+    text-align-center;
+    font-family: "Roboto Slab", serif;
+    font-weight: 400;
+}
+td{
+    text-align-center;
+    font-family: "Roboto Slab", serif;
+    font-weight: 400;
+}

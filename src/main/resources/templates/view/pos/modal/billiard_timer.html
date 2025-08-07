@@ -1,0 +1,51 @@
+<div th:fragment="_billiard_timer" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="modal fade" id="billiard_timer_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+         tabindex="-1"
+         aria-labelledby="billiard_timer_modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="billiard_timer_modalLabel">Pool Play Monitor</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="statusHidden" id="statusHidden" />
+                    <input type="hidden" name="durationHidden" id="durationHidden" />
+                    <input type="hidden" name="idHidden" id="idHidden" />
+                    <div class="text-center">
+                        <h5 id="hourStatus"></h5>
+                    </div>
+
+                    <div class="d-flex flex-column gap-2">
+                        <div class="d-flex gap-2">
+                            <span class="fw-bold">Name :</span>
+                            <span class="fw-bold" id="name_of_customer"></span>
+                        </div>
+
+                        <div class="card p-3">
+                            <span class="fw-bold">Timer:</span>
+                            <div class="card-body">
+                                <span><h2 id="remaining_time"></h2></span>
+                                <div class="d-flex gap-2">
+                                    <button id="start" class="btn  btn-outline-primary">
+                                        <span class="d-flex gap-2 align-items-center">
+                                            <i class="fa-solid fa-lg fa-play"></i>
+                                            <span>START</span>
+                                        </span>
+                                    </button>
+                                    <button id="stop" class="btn btn-outline-danger">
+                                       <span class="d-flex gap-2 align-items-center">
+                                            <i class="fa-solid fa-lg fa-stop"></i>
+                                            <span>STOP</span>
+                                        </span>
+                                    </button>
+                                    <button id="billiard_proceedToPayment" class="btn btn-outline-primary">PROCEED TO PAYMENT</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

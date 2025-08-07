@@ -1,0 +1,54 @@
+<div th:fragment="_editAccount" xmlns:th="http://www.w3.org/1999/xhtml">
+    <!-- Modal -->
+    <div class="modal fade" id="editAccount" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="editAccountLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editAccountLabel">Edit Account</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="form_editAccount">
+                    <div class="modal-body">
+
+                        <div class="d-flex flex-column gap-2">
+                            <input type="hidden" id="user_id" name="user_id" class="form-control"/>
+                            <span>User Id<span class="text-danger">*</span></span>
+                            <input readonly id="user_id_text" name="user_id_text" class="bg-light form-control"/>
+
+                            <span>Username<span class="text-danger">*</span></span>
+                            <input readonly id="usernameEdit" name="username" required class="bg-light form-control"/>
+
+                            <span>First Name<span class="text-danger">*</span></span>
+                            <input id="first_nameEdit" name="first_name" required class="form-control"/>
+
+                            <span>Middle Name</span>
+                            <input id="middle_nameEdit" name="middle_name" class="form-control"/>
+
+                            <span>Last Name<span class="text-danger">*</span></span>
+                            <input id="last_nameEdit" name="last_name" required class="form-control"/>
+
+                            <span>Email</span>
+                            <input readonly id="emailEdit" name="email" required class="bg-light form-control" />
+
+                            <span>Role<span class="text-danger">*</span></span>
+                            <select name="role_id" id="role_idEdit" required class="form-select">
+                                <option selected value="" disabled>Select</option>
+                                <option value="1">Admin</option>
+                                <option value="2">Staff</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

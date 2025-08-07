@@ -1,0 +1,84 @@
+<div th:fragment="_stockOutModal" xmlns:th="http://www.w3.org/1999/xhtml">
+    <!-- Modal -->
+    <div class="modal fade" id="stockOutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="stockOutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered  modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="stockOutModalLabel">Stock Out</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-home2" type="button" role="tab" aria-controls="nav-home2"
+                                    aria-selected="true">Home
+                            </button>
+                            <button class="nav-link" id="nav-stockOutHistory-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-stockOutHistory" type="button" role="tab"
+                                    aria-controls="nav-stockOutHistory"
+                                    aria-selected="false">Stock Out History
+                            </button>
+                        </div>
+                    </nav>
+
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home2" role="tabpanel"
+                             aria-labelledby="nav-home-tab" tabindex="0">
+                            <div class="text-center">
+                                <h5>Stock List</h5>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="DT_ViewBatchList" class="table table-striped">
+                                    <thead>
+                                    <th>Batch Id</th>
+                                    <th>Item Name</th>
+                                    <th>Brand</th>
+                                    <th>Description</th>
+                                    <th>Available Stock</th>
+                                    <th>Quantity to Stock Out</th>
+                                    <th>UoM</th>
+                                    <th>Expiration Date</th>
+                                    <th>Action</th>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="my-3 d-flex justify-content-end">
+                                <button id="btnStockOut" class="btn-primary btn">Stock Out</button>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-stockOutHistory" role="tabpanel"
+                             aria-labelledby="nav-stockOutHistory-tab" tabindex="0">
+                            <div class="text-center">
+                                <h5>Stock Out History</h5>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="DT_StockOutHistory" class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Batch Id</th>
+                                        <th>Item</th>
+                                        <th>Category</th>
+                                        <th>Brand</th>
+                                        <th>Description</th>
+                                        <th>Quantity Stocked Out</th>
+                                        <th>Expiration Date</th>
+                                        <th>Encoded By</th>
+                                        <th>Encoded Date</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

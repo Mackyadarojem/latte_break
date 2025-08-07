@@ -1,0 +1,79 @@
+<div th:fragment="_productModal" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="modal fade" id="productModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="productModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="productModalLabel"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="form_addProduct">
+                    <div class="modal-body">
+                        <input type="hidden" name="method" id="method"/>
+                        <input type="hidden" name="id" id="id"/>
+                        <div class="d-flex flex-column gap-2">
+                            <span>Name<span class="text-danger">*</span></span>
+                            <input required id="product_name" name="name" class="form-control">
+                            <span>Category<span class="text-danger">*</span></span>
+                            <select required id="category_id" name="category_id" class="form-select">
+                                <option th:each="category : ${category}"
+                                        th:value="${category.category_id}"
+                                        th:text="${category.category_name}"
+                                        th:selected="${category.category_id == 1}">
+                                </option>
+                            </select>
+
+
+                            <div class="priceContainer">
+                                <div class="d-flex gap-2">
+                                    <div class="w-100 singlePriceContainer">
+                                        <span>Price<span class="text-danger">*</span></span>
+                                        <div class="input-group">
+                                            <input required type="text" class="form-control price" name="price"
+                                                   id="singlePrice"
+                                                   step="0.01"
+                                                   min="0"
+                                                   placeholder="Enter amount">
+                                        </div>
+                                    </div>
+                                    <div class="w-100 mediumPriceContainer">
+                                        <span>Price (Medium)<span class="text-danger">*</span></span>
+                                        <div class="input-group">
+                                            <input required type="text" class="form-control price" name="priceMedium"
+                                                   id="mediumPrice"
+                                                   step="0.01"
+                                                   min="0"
+                                                   placeholder="Enter amount">
+                                        </div>
+                                    </div>
+                                    <div class="w-100 largePriceContainer">
+                                        <span>Price (Large)<span class="text-danger">*</span></span>
+                                        <div class="input-group">
+                                            <input required type="text" class="form-control price" name="priceLarge"
+                                                   id="largePrice"
+                                                   step="0.01"
+                                                   min="0"
+                                                   placeholder="Enter amount">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <span>Description</span>
+                            <textarea id="description" name="description" class="form-control"></textarea>
+
+                            <div class="mt-2 form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="available">
+                                <label class="form-check-label" for="available">Is this available?</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

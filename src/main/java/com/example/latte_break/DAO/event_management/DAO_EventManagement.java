@@ -49,7 +49,8 @@ public class DAO_EventManagement {
         String sql = "SELECT e.id, event_name, purpose, date, time, participants_name, participants_id,  \n" +
                 "UPPER(CONCAT(u.first_name, ' ',  u.middle_name, ' ', u.last_name)) as name\n" +
                 "FROM tbl_event e \n" +
-                "INNER JOIN tbl_user u ON e.created_by = u.id";
+                "INNER JOIN tbl_user u ON e.created_by = u.id \n" +
+                "WHERE archive_at IS NULL";
         return template.query(sql, new RowMapper<BEAN_EventManagement>() {
             @Override
             public BEAN_EventManagement mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -65,5 +66,17 @@ public class DAO_EventManagement {
                 return bean;
             }
         });
+    }
+
+    public int editEvent(String event_name, String purpose, String date, String time, String participants_name, String participants_id, int user_id, int id) {
+        String sql = "UPDATE tbl_event SET event_name = ?, purpose = ?, date = ?, time = ?, participants_name = ?, participants_id = ?, updated_by = ? \n" +
+                "WHERE id = ?";
+        return template.update(sql, event_name, purpose, date, time, participants_name, participants_id, user_id, id);
+    }
+
+    public int archiveEvent(int id, int user_id) {
+        String sql = "UPDATE tbl_event SET archive_at = NOW(), archive_by = ? \n" +
+                "WHERE id = ?";
+        return template.update(sql, user_id, id);
     }
 }

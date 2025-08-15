@@ -84,6 +84,54 @@ public class CTRL_EventManagement {
         List<BEAN_EventManagement> list = daoEventManagement.getAllEvent();
 
         response.put("data", list);
+
+        return response;
+    }
+
+    @RequestMapping("/ajax/editEvent")
+    @ResponseBody
+    public Map<String, Object> editEvent(BEAN_EventManagement bean, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+
+        Map<String, Object> response = new HashMap<>();
+        String event_name = bean.getEvent_name();
+        String purpose = bean.getPurpose();
+        String date = bean.getDate();
+        String time = bean.getTime();
+        String participants_ids = bean.getParticipants_ids();
+        String participants_name = bean.getParticipants_name();
+        int id = bean.getId();
+
+        int res = daoEventManagement.editEvent(event_name, purpose, date, time, participants_name, participants_ids, user_id, id);
+
+        if (res > 0) {
+            response.put("status", "success");
+            response.put("message", "Event Successfully Updated!");
+        } else {
+            response.put("status", "failed");
+            response.put("message", "Error on Updating Event");
+        }
+        return response;
+    }
+
+    @RequestMapping("/ajax/archiveEvent")
+    @ResponseBody
+    public Map<String, Object> archiveEvent(BEAN_EventManagement bean, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+
+        Map<String, Object> response = new HashMap<>();
+
+        int res = daoEventManagement.archiveEvent(bean.getId(), user_id);
+
+        if (res > 0) {
+            response.put("status", "success");
+            response.put("message", "Event Successfully Archived!");
+        } else {
+            response.put("status", "failed");
+            response.put("message", "Error on Archiving Event");
+        }
         
         return response;
     }

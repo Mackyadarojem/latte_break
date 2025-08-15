@@ -1,6 +1,8 @@
 package com.example.latte_break.BEAN.biliard;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 public class BEAN_Billiard {

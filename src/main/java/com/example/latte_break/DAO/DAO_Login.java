@@ -33,8 +33,13 @@ public class DAO_Login {
     }
 
     public BEAN_Account getInfo(int id) {
-        String sql = "Select u.*, r.role_name from tbl_user u " +
-                "LEFT JOIN ref_role r ON u.role_id = r.id  WHERE u.id = ?";
+        String sql =
+        "SELECT u.*, " +
+                "       r.role_name, " +
+                "       UPPER(CONCAT_WS(' ', u.first_name, u.middle_name, u.last_name)) AS name " +
+                "FROM tbl_user u " +
+                "LEFT JOIN ref_role r ON u.role_id = r.id " +
+                "WHERE u.id = ?";
         return template.queryForObject(sql, new Object[]{id}, new RowMapper<BEAN_Account>() {
             @Override
             public BEAN_Account mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -43,6 +48,7 @@ public class DAO_Login {
                 bean.setRole_id(rs.getInt("role_id"));
                 bean.setRole_name(rs.getString("role_name"));
                 bean.setUser_id(rs.getInt("id"));
+                bean.setFull_name(rs.getString("name"));
                 return bean;
             }
         });

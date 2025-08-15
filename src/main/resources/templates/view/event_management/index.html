@@ -67,12 +67,18 @@
                                 </form>
                             </div>
 
+                            <hr>
+                            <div class="text-start d-flex align-items-start justify-content-start">
+                                <button id="addEvent" class="btn  btn-primary"><span>ADD EVENT</span></button>
+                            </div>
+
                             <div class="table-responsive">
                                 <table id="DT_EventList" class="table table-striped">
                                     <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Event Name</th>
+                                        <th>Purpose of Event</th>
                                         <th>Date and Time of Event</th>
                                         <th>Created By</th>
                                         <th>Action</th>
@@ -91,6 +97,9 @@
     </div>
 </div>
 
+<div th:replace="~{view/event_management/modals/add_event_modal :: _add_event_modal}"></div>
+<div th:replace="~{view/event_management/modals/participants_modal :: _participants_modal}"></div>
+
 <!-- Helpers -->
 <script src="" th:src="@{/app-assets/vendor/js/helpers.js}"></script>
 <script src="" th:src="@{/app-assets/vendor/js/template-customizer.js}"></script>
@@ -99,7 +108,6 @@
 <script src="" th:src="@{/app-assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
 <script src="" th:src="@{/app-assets/vendor/libs/hammer/hammer.js}"></script>
 <script src="" th:src="@{/app-assets/vendor/libs/typeahead-js/typeahead.js}"></script>
-<script src="" th:src="@{/app-assets/vendor/libs/sweetalert2/sweetalert2.js}"></script>
 <script src="" th:src="@{/app-assets/vendor/libs/select2/select2.js}"></script>
 <script src="" th:src="@{/app-assets/vendor/libs/jquery-mask-plugin/jquery.mask.min.js}"></script>
 <script src="" th:src="@{/app-assets/vendor/js/menu.js}"></script>

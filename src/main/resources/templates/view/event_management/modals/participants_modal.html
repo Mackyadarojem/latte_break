@@ -1,0 +1,30 @@
+<div th:fragment="_participants_modal" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="modal fade" id="participants_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="participants_modal_label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="participants_modal_label">Select Participants</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table id="DT_Participants" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="btn_saveParticipants" type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

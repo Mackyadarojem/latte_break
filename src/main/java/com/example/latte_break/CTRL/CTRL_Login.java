@@ -92,6 +92,7 @@ public class CTRL_Login {
             session.setAttribute("username", user.getUsername());
             session.setAttribute("role_id", user.getRole_id());
             session.setAttribute("role_name", user.getRole_name());
+            session.setAttribute("full_name", user.getFull_name());
             session.setAttribute("user_id", result);
             dao.updateLastLogin(result);
             response.put("role_id", user.getRole_id());

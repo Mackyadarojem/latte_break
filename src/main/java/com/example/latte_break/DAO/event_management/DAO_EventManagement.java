@@ -45,13 +45,25 @@ public class DAO_EventManagement {
         return template.update(sql, new Object[]{event_name, purpose, date, time, participants_name, participants_id, user_id});
     }
 
-    public List<BEAN_EventManagement> getAllEvent() {
-        String sql = "SELECT e.id, event_name, purpose, date, time, participants_name, participants_id,  \n" +
-                "UPPER(CONCAT(u.first_name, ' ',  u.middle_name, ' ', u.last_name)) as name\n" +
+    public List<BEAN_EventManagement> getAllEvent(String event_name, String date_from, String date_to) {
+        System.out.println(event_name);
+        System.out.println(date_from);
+        System.out.println(date_to);
+        String sql = "SELECT \n" +
+                "    e.id, \n" +
+                "    event_name, \n" +
+                "    purpose, \n" +
+                "    date, \n" +
+                "    time, \n" +
+                "    participants_name, \n" +
+                "    participants_id,  \n" +
+                "    UPPER(CONCAT(u.first_name, ' ', u.middle_name, ' ', u.last_name)) AS name\n" +
                 "FROM tbl_event e \n" +
                 "INNER JOIN tbl_user u ON e.created_by = u.id \n" +
-                "WHERE archive_at IS NULL";
-        return template.query(sql, new RowMapper<BEAN_EventManagement>() {
+                "WHERE archive_at IS NULL \n" +
+                "  AND ( ? = '' OR e.event_name LIKE CONCAT('%', ?, '%') ) \n" +
+                "  AND ( ( ? = '' AND ? = '' ) OR ( e.date >= ? AND e.date <=  ? ) );\n";
+        return template.query(sql, new Object[]{event_name, event_name, date_from, date_to, date_from, date_to}, new RowMapper<BEAN_EventManagement>() {
             @Override
             public BEAN_EventManagement mapRow(ResultSet rs, int rowNum) throws SQLException {
                 BEAN_EventManagement bean = new BEAN_EventManagement();

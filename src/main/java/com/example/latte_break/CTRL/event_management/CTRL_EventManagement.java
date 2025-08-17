@@ -78,10 +78,14 @@ public class CTRL_EventManagement {
 
     @RequestMapping("/ajax/getAllEvent")
     @ResponseBody
-    public Map<String, Object> getAllEvent() {
+    public Map<String, Object> getAllEvent(BEAN_EventManagement beanEventManagement) {
         Map<String, Object> response = new HashMap<>();
 
-        List<BEAN_EventManagement> list = daoEventManagement.getAllEvent();
+        String event_name = beanEventManagement.getEvent_name();
+        String date_from = beanEventManagement.getDate_from();
+        String date_to = beanEventManagement.getDate_to();
+
+        List<BEAN_EventManagement> list = daoEventManagement.getAllEvent(event_name, date_from, date_to);
 
         response.put("data", list);
 
@@ -132,7 +136,7 @@ public class CTRL_EventManagement {
             response.put("status", "failed");
             response.put("message", "Error on Archiving Event");
         }
-        
+
         return response;
     }
 }

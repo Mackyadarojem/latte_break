@@ -14,4 +14,8 @@ public class BEAN_EventManagement {
     private String time;
     private String participants_ids;
     private String participants_name;
+
+
+    private String date_from;
+    private String date_to;
 }

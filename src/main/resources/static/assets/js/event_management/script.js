@@ -1,95 +1,107 @@
 $(document).ready(function(){
-   $("#DT_EventList").DataTable({
-    processing: true,
-    ajax: {
-        url: '/event_management/ajax/getAllEvent',
-        type: 'POST'
-    },
-    columns: [
-        {
-            data: null,
-            render : function(data, type, row, meta){
-                return meta.row + 1;
-            }
-        },
-        {
-            data: 'event_name'
-        },
-        {
-            data: 'purpose'
-        },
-        {
-            data: 'date',
-            render : function (data, type, row){
-                return formatDate(data)  + ' ' + formatTime(row.time);
-            }
-        },
-        {
-            data: 'name'
-        },
-        {
-            data: 'id',
-            render : function (data, type , row){
-                return `<div class="d-flex gap-2 ">
-                    <button class="btn btn-warning btnEdit ">Edit</button>
-                    <button class="btn btn-danger btnArchive">Archive</button>
-                </div>`
-            }
-        }
-    ],
-    createdRow: function (row, data, dataIndex) {
-        $(row).find(".btnEdit").off("click").on("click", function(){
-            $("#method").val("edit");
-            $("#event_id").val(data.id);
-            $("#event_name").val(data.event_name);
-            $("#time").val(data.time);
-            $("#date").val(data.date);
-            $("#purpose").val(data.purpose);
-            $("#participants_id").val(data.participants_ids);
-            $("#participants").val(data.participants_name);
-            $("#add_event_modal_label").text("Edit Event");
-            $("#add_event_modal").modal("show");
-        });
+   initDT_EventList();
 
-        $(row).find(".btnArchive").off("click").on("click", function(){
-            var id = data.id;
-
-            Swal.fire({
-                title: 'Do you want to archive this event?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: "Save"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.get("/event_management/ajax/archiveEvent", {id : id}, function(res){
-                        if (res.status == "success") {
-                            Swal.fire(
-                                'Event Management',
-                                res.message,
-                                'success'
-                            ).then(() => {
-                                location.reload();
-                            });
-                        } else {
-                            Swal.fire(
-                                'Event Management',
-                                res.message,
-                                'error'
-                            ).then(() => {
-                                location.reload();
-                            });
-                        }
-                    });
-                }
-            });
-
-        });
+   function initDT_EventList(){
+    if ( $.fn.DataTable.isDataTable("#DT_EventList") ) {
+        $("#DT_EventList").DataTable().clear().destroy();
     }
-   });
+    var DT_EventList =  $("#DT_EventList").DataTable({
+       processing: true,
+       ajax: {
+           url: '/event_management/ajax/getAllEvent',
+           type: 'POST',
+           data: function(d) {
+               d.date_from = $("#date_from").val();
+               d.date_to   = $("#date_to").val();
+               d.event_name = $("#event_name_search").val();
+           },
+       },
+       columns: [
+           {
+               data: null,
+               render : function(data, type, row, meta){
+                   return meta.row + 1;
+               }
+           },
+           {
+               data: 'event_name'
+           },
+           {
+               data: 'purpose'
+           },
+           {
+               data: 'date',
+               render : function (data, type, row){
+                   return formatDate(data)  + ' ' + formatTime(row.time);
+               }
+           },
+           {
+               data: 'name'
+           },
+           {
+               data: 'id',
+               render : function (data, type , row){
+                   return `<div class="d-flex gap-2 ">
+                       <button class="btn btn-warning btnEdit ">Edit</button>
+                       <button class="btn btn-danger btnArchive">Archive</button>
+                   </div>`
+               }
+           }
+       ],
+       createdRow: function (row, data, dataIndex) {
+           $(row).find(".btnEdit").off("click").on("click", function(){
+               $("#method").val("edit");
+               $("#event_id").val(data.id);
+               $("#event_name").val(data.event_name);
+               $("#time").val(data.time);
+               $("#date").val(data.date);
+               $("#purpose").val(data.purpose);
+               $("#participants_id").val(data.participants_ids);
+               $("#participants").val(data.participants_name);
+               $("#add_event_modal_label").text("Edit Event");
+               $("#add_event_modal").modal("show");
+           });
 
-  let selectedParticipants = [];
+           $(row).find(".btnArchive").off("click").on("click", function(){
+               var id = data.id;
 
-   var dtParticipants = $("#DT_Participants").DataTable({
+               Swal.fire({
+                   title: 'Do you want to archive this event?',
+                   icon: 'warning',
+                   showCancelButton: true,
+                   confirmButtonText: "Save"
+               }).then((result) => {
+                   if (result.isConfirmed) {
+                       $.get("/event_management/ajax/archiveEvent", {id : id}, function(res){
+                           if (res.status == "success") {
+                               Swal.fire(
+                                   'Event Management',
+                                   res.message,
+                                   'success'
+                               ).then(() => {
+                                   location.reload();
+                               });
+                           } else {
+                               Swal.fire(
+                                   'Event Management',
+                                   res.message,
+                                   'error'
+                               ).then(() => {
+                                   location.reload();
+                               });
+                           }
+                       });
+                   }
+               });
+
+           });
+       }
+      });
+   }
+
+    let selectedParticipants = [];
+
+    var dtParticipants = $("#DT_Participants").DataTable({
         ajax: '/event_management/ajax/getAllUsers',
         columns: [
             {
@@ -135,6 +147,7 @@ $(document).ready(function(){
 
     $("#addEvent").on("click", function(){
         $("#add_event_modal_label").text("Add Event");
+        $("#method").val("add");
         $("#add_event_modal").modal("show");
     });
 
@@ -225,6 +238,12 @@ $(document).ready(function(){
         });
 
 
+    });
+
+    $("#form_search").on("submit", function(e){
+        e.preventDefault();
+
+       initDT_EventList();
     });
 
     function formatDate(date) {

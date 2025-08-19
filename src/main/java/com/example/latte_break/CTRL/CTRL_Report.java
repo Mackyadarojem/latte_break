@@ -41,10 +41,13 @@ public class CTRL_Report {
 
     @RequestMapping("/ajax/getItemList")
     @ResponseBody
-    public Map<String, Object> getItemList() {
+    public Map<String, Object> getItemList(BEAN_Report bean) {
         Map<String, Object> result = new HashMap<>();
+        String date_from = bean.getDate_from();
+        String date_to = bean.getDate_to();
+        int category_id = bean.getCategory_id();
 
-        List<BEAN_Report> list = daoReport.getItemList();
+        List<BEAN_Report> list = daoReport.getItemList(category_id, date_from, date_to);
 
         result.put("data", list);
 

@@ -22,7 +22,9 @@ public class DAO_Report {
         this.template = template;
     }
 
-    public List<BEAN_Report> getItemList() {
+    public List<BEAN_Report> getItemList(int category_id , String date_from , String date_to) {
+        System.out.println(date_from);
+        System.out.println(date_to);
         String sql = "SELECT \n" +
                 "    CONCAT('Item','-', DATE_FORMAT(i.created_at, '%Y%m%d'), '-', LPAD(i.id, 4, '0')) AS item_code,\n" +
                 "    i.id,\n" +
@@ -36,8 +38,10 @@ public class DAO_Report {
                 "FROM tbl_item i\n" +
                 "INNER JOIN ref_category_item c ON i.category_id = c.id\n" +
                 "LEFT JOIN tbl_batch b ON i.id = b.item_id\n" +
-                "WHERE b.quantity != 0;";
-        return template.query(sql, new RowMapper<BEAN_Report>() {
+                "WHERE b.quantity != 0\n" +
+                "AND (? = 0 OR i.category_id = ?)\n" +
+                "AND ( ( ? = '' OR ? = '' ) OR ( DATE_FORMAT(b.timestamp, '%Y%m%d') >= ? AND DATE_FORMAT(b.timestamp, '%Y%m%d') <=  ? ) );";
+        return template.query(sql,new Object[]{category_id, category_id, date_from, date_to, date_from, date_to}, new RowMapper<BEAN_Report>() {
             @Override
             public BEAN_Report mapRow(ResultSet rs, int rowNum) throws SQLException {
                 BEAN_Report bean = new BEAN_Report();

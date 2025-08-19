@@ -13,4 +13,8 @@ public class BEAN_Report {
     private String stock;
     private String expiration_date;
     private String unit_measurement;
+
+    private String date_to;
+    private String date_from;
+    private int category_id;
 }

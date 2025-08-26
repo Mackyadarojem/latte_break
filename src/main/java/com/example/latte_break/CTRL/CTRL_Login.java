@@ -136,17 +136,6 @@ public class CTRL_Login {
         return response;
     }
 
-    //DASHBOARD
-    @RequestMapping("home")
-    public ModelAndView home(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        if (session.getAttribute("user_id") == null) {
-            return new ModelAndView("redirect:/login");
-        }
-        return new ModelAndView("view/dashboard/index");
-    }
-
-
     //Kitchen Display
     @RequestMapping("kitchen_display")
     public ModelAndView kitchen_display() {

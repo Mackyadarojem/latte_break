@@ -1,25 +1,51 @@
 $(document).ready(function () {
-
+    var scheduledDates = [];
     var role_id = $("#role_id").val();
-    const scheduledDates = [
-        "2025-05-03",
-        "2025-05-10",
-        "2025-04-10",
-        "2025-04-20",
-    ];
-    $("#calendar").datepicker({
-        beforeShowDay: function(date) {
-        let y = date.getFullYear();
-        let m = (date.getMonth() + 1).toString().padStart(2, '0');
-        let d = date.getDate().toString().padStart(2, '0');
-        let formattedDate = `${y}-${m}-${d}`;
 
-         if (scheduledDates.includes(formattedDate)) {
-             return [true, "has-schedule", "Scheduled!"];
-         }
-         return [true, "", ""];
-        }
-    });
+    initEventSchedules();
+
+    function initEventSchedules(){
+        $.get("/home/ajax/getAllEvent", function(res){
+            var data = res.data;
+
+            data.forEach(data => {
+              scheduledDates.push({
+                "id" : data.id,
+                "date" : data.date
+              })
+            });
+
+            console.log(scheduledDates);
+            initCalendar();
+        });
+    }
+
+    function initCalendar(){
+        $("#calendar").datepicker({
+            beforeShowDay: function(date) {
+                let y = date.getFullYear();
+                let m = (date.getMonth() + 1).toString().padStart(2, '0');
+                let d = date.getDate().toString().padStart(2, '0');
+                let formattedDate = `${y}-${m}-${d}`;
+
+                let hasSchedule = scheduledDates.some(e => e.date === formattedDate);
+
+                if (hasSchedule) {
+                    return [true, "has-schedule", "Scheduled!"];
+                }
+                 return [true, "", ""];
+            },
+            onSelect: function(dateText) {
+                let events = scheduledDates.filter(e => e.date === dateText);
+
+                if (events.length > 0) {
+
+                }
+            }
+        });
+    }
+
+
     var features;
     if(role_id == 1){
          features = [

@@ -69,7 +69,10 @@ public class CTRL_POS {
         Map<String, Object> result = new HashMap<>();
         String products = "";
         boolean first = true;
+        String invoiceNumber = daoPos.generateInvoiceNumber();
+
         for (BEAN_POS bean : beanList.getProductList()) {
+
             String product = bean.getProductName();
             if (!first) {
                 products += ",\n";
@@ -109,7 +112,6 @@ public class CTRL_POS {
         String service_type = beanList.getServiceType();
         String subTotal = beanList.getSubTotal();
 
-        String invoiceNumber = daoPos.generateInvoiceNumber();
         int res = daoPos.addInvoiceRecord(invoiceNumber, products, total_amount,
                 cash_tendered, mode_of_payment, change, service_type,
                 username, discount, subTotal, reference_no, sender_name);

@@ -115,4 +115,10 @@ public class DAO_POS {
                 "VALUES (?, ?, ?, NOW())";
         return template.update(sql, transaction, products, created_by);
     }
+
+    public int addOrderRecord(){
+        String sql = "";
+        return 0;
+    }
+
 }

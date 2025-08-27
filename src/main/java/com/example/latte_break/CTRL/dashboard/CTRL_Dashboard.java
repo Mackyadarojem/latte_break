@@ -33,10 +33,15 @@ public class CTRL_Dashboard {
 
     @RequestMapping("/ajax/getAllEvent")
     @ResponseBody
-    public Map<String, Object> getAllEvent() {
+    public Map<String, Object> getAllEvent(BEAN_EventManagement beanEventManagement) {
         Map<String, Object> response = new HashMap<>();
-
-        List<BEAN_EventManagement> list = daoEventManagement.getAllEvent("", "", "");
+        String date_from = "";
+        if(beanEventManagement.getDate_from() == null){
+            date_from = "";
+        }else{
+            date_from = beanEventManagement.getDate_from();
+        }
+        List<BEAN_EventManagement> list = daoEventManagement.getAllEvent("", date_from, date_from);
 
         response.put("data", list);
 

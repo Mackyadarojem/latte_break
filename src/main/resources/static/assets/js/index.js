@@ -35,17 +35,61 @@ $(document).ready(function () {
                 }
                  return [true, "", ""];
             },
-            onSelect: function(dateText) {
-                let events = scheduledDates.filter(e => e.date === dateText);
+            onSelect: function(date) {
+                let selectedDate = $(this).datepicker("getDate"); // get Date object
+                let y = selectedDate.getFullYear();
+                let m = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+                let d = selectedDate.getDate().toString().padStart(2, '0');
+                // format as MM-DD-YYYY
+                let formattedDate = `${y}-${m}-${d}`;
+                let events = scheduledDates.filter(e => e.date === formattedDate);
 
                 if (events.length > 0) {
-
+                    var date = events[0].date;
+                    initDT_Event(date);
+                    $("#event_modal").modal("show");
                 }
             }
         });
     }
 
-
+    function initDT_Event(date){
+        if ($.fn.DataTable.isDataTable("#DT_EventList")) {
+            $("#DT_EventList").DataTable().clear().destroy();
+        }
+        $("#DT_EventList").DataTable({
+            ajax: {
+                url: "/home/ajax/getAllEvent",
+                type: "GET",
+                data: function(d) {
+                    d.date_from = date
+                }
+            },
+            columns : [
+                {
+                    data : null,
+                    render : function (data, type ,row, meta){
+                        return meta.row + 1;
+                    }
+                },
+                {
+                    data : "event_name"
+                },
+                {
+                    data : "date",
+                    render : function (data, type ,row, meta){
+                        return data  + ' ' + row.time;
+                    }
+                },
+                {
+                    data : "participants_name",
+                    render : function (data, type ,row, meta){
+                        return data;
+                    }
+                },
+            ]
+        });
+    }
     var features;
     if(role_id == 1){
          features = [
@@ -77,7 +121,7 @@ $(document).ready(function () {
     }
 
 
-      $('#searchInput').on('input', function () {
+    $('#searchInput').on('input', function () {
         const searchText = $(this).val().toLowerCase();
         const filtered = features.filter(f =>
           f.name.toLowerCase().includes(searchText)

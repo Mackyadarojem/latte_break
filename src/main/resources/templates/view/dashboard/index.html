@@ -20,9 +20,11 @@
     <link rel="stylesheet" th:href="@{/vendor/fonts/boxicons.css}"/>
     <link rel="stylesheet" th:href="@{/vendor/fonts/fontawesome.css}"/>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" th:href="@{assets/dataTable/datatables.min.css}">
 
     <script th:src="@{assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{assets/js/jquery.min.js}"></script>
+    <script th:src="@{assets/dataTable/datatables.min.js}"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 </head>
 
@@ -33,7 +35,7 @@
     }
 
     .ui-datepicker .has-schedule a {
-        background-color: blue !important;
+        background-color: green !important;
         color: black !important;
     }
 </style>
@@ -230,6 +232,8 @@
         </div>
     </div>
 </div>
+
+<div th:replace="~{view/dashboard/modals/event_modal :: _event_modal}"></div>
 
 <!-- Helpers -->
 <script src="" th:src="@{/app-assets/vendor/js/helpers.js}"></script>

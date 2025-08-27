@@ -76,6 +76,9 @@ $(document).ready(function () {
                     data : "event_name"
                 },
                 {
+                    data : "purpose"
+                },
+                {
                     data : "date",
                     render : function (data, type ,row, meta){
                         return data  + ' ' + row.time;

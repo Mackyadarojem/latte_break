@@ -370,4 +370,108 @@ $(document).ready(function(){
             });
         }
     });
+
+    var DT_ArchiveEvent = $("#DT_EventList").DataTable({
+        "processing": true,
+        "ajax": {
+           "url": "event_management/ajax/getAllArchiveEvent",
+           "type": "POST"
+        },
+        columns: [
+            {
+              "data": "id",
+               "render": function(data, type, row, meta) {
+                   return `
+                   <div class="d-flex gap-2">
+                   <button class="btn btn-primary btn-sm restore" data-id="${data}"><span>Restore</span></button>
+                   <button class="btn btn-danger btn-sm delete" data-id="${data}"><span>Delete</span></button>
+                   </div>
+                   `
+               }
+            },
+            {
+                "data" : "event_name"
+            },
+            {
+                "data" : "purpose"
+            },
+            {
+                "data" : "participants_name"
+            },
+            {
+                "data" : "archive_at"
+            },
+            {
+                "data" : "archive_by"
+            },
+        ],
+        "columnDefs": [
+             { "className": "text-start", "targets": "_all" }
+        ],
+        fnCreatedRow: function(row, data, dataIndex) {
+            $(row).find('.restore').on('click', function() {
+                var id = $(this).data("id");
+                Swal.fire({
+                   icon: "warning",
+                   title: "Do you want to recover this event?",
+                   showCancelButton: true,
+                   confirmButtonText: "Save"
+                }).then((result) => {
+                    if(result.isConfirmed){
+                        $.ajax({
+                            url: "event_management/ajax/restoreEvent",
+                            type: "POST",
+                            data: {id : id},
+                            dataType: "json", // Expected response type
+                            success: function(response) {
+                                if(response.status == "success"){
+                                   Swal.fire(response.message, "", "success").then(() => {
+                                      location.reload();
+                                   });
+                                }else{
+                                   Swal.fire(response.message, "", "error");
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire(error, "", "error");
+                                console.error("AJAX Error:", error);
+                            }
+                        });
+                    }
+                });
+            });
+
+             $(row).find('.delete').on('click', function() {
+                var id = $(this).data("id");
+                Swal.fire({
+                   icon: "warning",
+                   title: "Do you want to delete this event?",
+                   showCancelButton: true,
+                   confirmButtonText: "Save"
+                }).then((result) => {
+                    if(result.isConfirmed){
+                        $.ajax({
+                            url: "event_management/ajax/deleteEvent",
+                            type: "POST",
+                            data: {id : id},
+                            dataType: "json", // Expected response type
+                            success: function(response) {
+                                if(response.status == "success"){
+                                   Swal.fire(response.message, "", "success").then(() => {
+                                      location.reload();
+                                   });
+                                }else{
+                                   Swal.fire(response.message, "", "error");
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire(error, "", "error");
+                                console.error("AJAX Error:", error);
+                            }
+                        });
+                    }
+                });
+            });
+        }
+    });
 });

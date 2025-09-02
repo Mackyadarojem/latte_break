@@ -1,6 +1,8 @@
 package com.example.latte_break.CTRL.event_management;
 
 import com.example.latte_break.BEAN.event_management.BEAN_EventManagement;
+import com.example.latte_break.BEAN.inventory.BEAN_ItemList;
+import com.example.latte_break.BEAN.inventory.BEAN_ProductList;
 import com.example.latte_break.DAO.event_management.DAO_EventManagement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -123,11 +125,11 @@ public class CTRL_EventManagement {
     @ResponseBody
     public Map<String, Object> archiveEvent(BEAN_EventManagement bean, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        int user_id = (int) session.getAttribute("user_id");
+        String username = (String) session.getAttribute("username");
 
         Map<String, Object> response = new HashMap<>();
 
-        int res = daoEventManagement.archiveEvent(bean.getId(), user_id);
+        int res = daoEventManagement.archiveEvent(bean.getId(), username);
 
         if (res > 0) {
             response.put("status", "success");
@@ -138,5 +140,56 @@ public class CTRL_EventManagement {
         }
 
         return response;
+    }
+
+    @RequestMapping("/ajax/getAllArchiveEvent")
+    @ResponseBody
+    public Map<String, Object> getAllArchiveEvent(){
+        Map<String, Object> response = new HashMap<>();
+
+        List<BEAN_EventManagement> list = daoEventManagement.getArchiveEvent();
+
+        response.put("data", list);
+
+        return response;
+    }
+
+    @RequestMapping("ajax/deleteEvent")
+    @ResponseBody
+    public Map<String, Object> deleteEvent(BEAN_EventManagement bean) {
+        Map<String, Object> result = new HashMap<>();
+        int id = bean.getId();
+
+        int res = daoEventManagement.deleteEvent(id);
+        if (res > 0) {
+            result.put("status", "success");
+            result.put("message", "Event Successfully Deleted!");
+        } else {
+            result.put("status", "failed");
+            result.put("message", "Fail to Delete Event!");
+        }
+        return result;
+    }
+
+    @RequestMapping("ajax/restoreEvent")
+    @ResponseBody
+    public Map<String, Object> restoreEvent(BEAN_EventManagement bean, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Map<String, Object> result = new HashMap<>();
+
+        String username = (String) session.getAttribute("username");
+        int id = bean.getId();
+
+        int res = daoEventManagement.restoreEvent(username, id);
+
+        if (res > 0) {
+            result.put("status", "success");
+            result.put("message", "Event Successfully Recovered!");
+        } else {
+            result.put("status", "failed");
+            result.put("message", "Failed to Recover Event!");
+        }
+
+        return result;
     }
 }

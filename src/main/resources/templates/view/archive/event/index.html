@@ -1,0 +1,40 @@
+<div th:fragment="_archiveEventList" xmlns:th="http://www.w3.org/1999/xhtml">
+
+  <div>
+    <form id="form_searchArchiveEvent">
+      <div class="col-6">
+        <span>Name</span>
+        <input name="name" class="col-6 form-control">
+      </div>
+      <div class="col-6">
+        <span>Date</span>
+        <div class="d-flex gap-2">
+          <input name="date_from" id="date_from" class="form-control" type="date"/>
+          <input name="date_to" id="date_to" class="form-control" type="date"/>
+        </div>
+      </div>
+      <div class="mt-2">
+        <button type="submit" class="btn btn-primary">Search</button>
+        <button id="btnClear" type="button" class="btn btn-secondary">Clear</button>
+      </div>
+    </form>
+  </div>
+  <hr>
+  <div class="table-responsive">
+    <table id="DT_EventList" class="w-100 table table-striped">
+      <thead>
+      <tr class="text-center">
+        <th>Action</th>
+        <th>Event Name</th>
+        <th>Purpose</th>
+        <th>Participants</th>
+        <th>Archived Date</th>
+        <th>Archived By</th>
+      </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+</div>

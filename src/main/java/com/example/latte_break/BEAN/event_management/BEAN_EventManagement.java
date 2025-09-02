@@ -18,4 +18,7 @@ public class BEAN_EventManagement {
 
     private String date_from;
     private String date_to;
+
+    private String archive_by;
+    private String archive_at;
 }

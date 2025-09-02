@@ -2,6 +2,7 @@ package com.example.latte_break.CTRL;
 
 import com.example.latte_break.BEAN.inventory.BEAN_ItemList;
 import com.example.latte_break.BEAN.inventory.BEAN_ProductList;
+import com.example.latte_break.DAO.event_management.DAO_EventManagement;
 import com.example.latte_break.DAO.inventory.DAO_ItemList;
 import com.example.latte_break.DAO.inventory.DAO_ProductList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,10 @@ public class CTRL_Archive {
 
     @Autowired
     DAO_ItemList daoItem;
+
+    @Autowired
+    DAO_EventManagement daoEventManagement;
+
 
     @RequestMapping("")
     public ModelAndView viewArchiveItemList() {

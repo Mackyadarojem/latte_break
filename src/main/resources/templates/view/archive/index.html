@@ -66,6 +66,12 @@
                                             aria-controls="pills-account" aria-selected="true">Account
                                     </button>
                                 </li>
+                                <li class="nav-item w-100" role="presentation">
+                                    <button class="nav-link " id="pills-event-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-event" type="button" role="tab"
+                                            aria-controls="pills-event" aria-selected="true">Event
+                                    </button>
+                                </li>
                             </ul>
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-item" role="tabpanel"
@@ -79,6 +85,10 @@
                                 <div class="tab-pane fade show " id="pills-account" role="tabpanel"
                                      aria-labelledby="pills-account-tab" tabindex="0">
                                     <div th:replace="~{view/archive/accounts/index :: _archivedAccountList}"></div>
+                                </div>
+                                <div class="tab-pane fade show " id="pills-event" role="tabpanel"
+                                     aria-labelledby="pills-account-tab" tabindex="0">
+                                    <div th:replace="~{view/archive/event/index :: _archiveEventList}"></div>
                                 </div>
                             </div>
                         </div>

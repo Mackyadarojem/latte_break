@@ -86,9 +86,44 @@ public class DAO_EventManagement {
         return template.update(sql, event_name, purpose, date, time, participants_name, participants_id, user_id, id);
     }
 
-    public int archiveEvent(int id, int user_id) {
+    public int archiveEvent(int id, String username) {
         String sql = "UPDATE tbl_event SET archive_at = NOW(), archive_by = ? \n" +
                 "WHERE id = ?";
-        return template.update(sql, user_id, id);
+        return template.update(sql, username, id);
+    }
+
+    public List<BEAN_EventManagement> getArchiveEvent(){
+        String sql = "SELECT e.id, e.event_name, e.purpose, e.date, e.time, " +
+                "e.archive_by, e.archive_at, e.participants_name \n" +
+                "FROM tbl_event e \n" +
+                "WHERE e.archive_at IS NOT NULL";
+
+        return template.query(sql, new RowMapper<BEAN_EventManagement>() {
+            @Override
+            public BEAN_EventManagement mapRow(ResultSet rs, int rowNum) throws SQLException {
+                BEAN_EventManagement bean = new BEAN_EventManagement();
+                bean.setEvent_name(rs.getString("event_name"));
+                bean.setPurpose(rs.getString("purpose"));
+                bean.setDate(rs.getString("date"));
+                bean.setTime(rs.getString("time"));
+                bean.setArchive_at(rs.getString("archive_at"));
+                bean.setArchive_by(rs.getString("archive_by"));
+                bean.setParticipants_name(rs.getString("participants_name"));
+                bean.setId(rs.getInt("id"));
+                return bean;
+            }
+        });
+    }
+
+    public int deleteEvent(int id){
+        String sql = "DELETE FROM tbl_event WHERE id = ?";
+
+        return  template.update(sql, id);
+    }
+
+    public int restoreEvent(String username, int id) {
+        String sql = "UPDATE tbl_event SET archive_at = NULL, archive_by = NULL, updated_at = NOW(), updated_by = ? " +
+                " WHERE id = ? ";
+        return template.update(sql, username, id);
     }
 }

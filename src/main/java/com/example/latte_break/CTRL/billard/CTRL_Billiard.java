@@ -1,7 +1,10 @@
 package com.example.latte_break.CTRL.billard;
 
 import com.example.latte_break.BEAN.biliard.BEAN_Billiard;
+import com.example.latte_break.DAO.audit_logs.DAO_AuditLogs;
 import com.example.latte_break.DAO.billiard.DAO_Billiard;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +25,15 @@ public class CTRL_Billiard {
     @Autowired
     DAO_Billiard daoBilliard;
 
+    @Autowired
+    DAO_AuditLogs daoAuditLogs;
+
     @RequestMapping("ajax/addBilliardSched")
     @ResponseBody
-    public Map<String, Object> addBilliardSched(BEAN_Billiard bean) {
+    public Map<String, Object> addBilliardSched(BEAN_Billiard bean, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Add Billiard Schedule");
         Map<String, Object> response = new HashMap<>();
         String customerName = bean.getCustomerName();
         boolean openHour = bean.isOpen_hour();
@@ -52,7 +61,12 @@ public class CTRL_Billiard {
 
     @RequestMapping("ajax/getBilliardSched")
     @ResponseBody
-    public Map<String, Object> getBilliardSched() {
+    public Map<String, Object> getBilliardSched(HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Get Billiard Schedule List");
+
         Map<String, Object> response = new HashMap<>();
 
         List<BEAN_Billiard> list = daoBilliard.getBilliardSched();
@@ -64,8 +78,12 @@ public class CTRL_Billiard {
 
     @RequestMapping("billiard/ajax/startTime")
     @ResponseBody
-    public Map<String, Object> startTime(BEAN_Billiard bean) {
+    public Map<String, Object> startTime(BEAN_Billiard bean, HttpServletRequest request) {
         Map<String, Object> response = new HashMap<>();
+
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Billiard Start Time");
 
         int id = bean.getId();
         String duration = bean.getDuration();
@@ -87,8 +105,14 @@ public class CTRL_Billiard {
 
     @RequestMapping("billiard/ajax/endTime")
     @ResponseBody
-    public Map<String, Object> endTime(BEAN_Billiard bean) {
+    public Map<String, Object> endTime(BEAN_Billiard bean, HttpServletRequest request) {
         Map<String, Object> response = new HashMap<>();
+
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Billiard End Time");
+
+
         int id = bean.getId();
 
         int res = daoBilliard.stopTime(id);
@@ -104,8 +128,14 @@ public class CTRL_Billiard {
 
     @RequestMapping("billiard/ajax/cancelSched")
     @ResponseBody
-    public Map<String, Object> cancelSched(BEAN_Billiard bean) {
+    public Map<String, Object> cancelSched(BEAN_Billiard bean, HttpServletRequest request) {
         Map<String, Object> response = new HashMap<>();
+
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Billiard Cancel Schedule");
+
+
         int id = bean.getId();
 
         int res = daoBilliard.cancelSched(id);

@@ -4,9 +4,12 @@ import com.example.latte_break.BEAN.inventory.BEAN_ItemList;
 import com.example.latte_break.BEAN.inventory.BEAN_ProductList;
 import com.example.latte_break.BEAN.pos.BEAN_POS;
 import com.example.latte_break.BEAN.reports.BEAN_Report;
+import com.example.latte_break.DAO.audit_logs.DAO_AuditLogs;
 import com.example.latte_break.DAO.inventory.DAO_ItemList;
 import com.example.latte_break.DAO.inventory.DAO_ProductList;
 import com.example.latte_break.DAO.reports.DAO_Report;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +32,17 @@ public class CTRL_Report {
     @Autowired
     DAO_Report daoReport;
 
+    @Autowired
+    DAO_AuditLogs daoAuditLogs;
+
     //    REPORTS
     @RequestMapping("")
-    public ModelAndView salesReport() {
+    public ModelAndView salesReport(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
+        int user_id_session = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id_session, "View Reports");
+
         ModelAndView mav = new ModelAndView("view/reports/index");
         List<BEAN_ProductList> category = daoProduct.getCategory();
         List<BEAN_ItemList> itemCategory = daoItem.getCategory();

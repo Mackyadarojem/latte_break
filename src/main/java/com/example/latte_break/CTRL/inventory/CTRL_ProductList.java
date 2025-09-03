@@ -2,6 +2,7 @@ package com.example.latte_break.CTRL.inventory;
 
 import com.example.latte_break.BEAN.inventory.BEAN_ItemList;
 import com.example.latte_break.BEAN.inventory.BEAN_ProductList;
+import com.example.latte_break.DAO.audit_logs.DAO_AuditLogs;
 import com.example.latte_break.DAO.inventory.DAO_ProductList;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -21,6 +22,8 @@ import java.util.Objects;
 public class CTRL_ProductList {
     @Autowired
     DAO_ProductList daoInventory;
+    @Autowired
+    DAO_AuditLogs daoAuditLogs;
 
     @RequestMapping("/productList")
     public ModelAndView productList(HttpServletRequest request) {
@@ -28,6 +31,9 @@ public class CTRL_ProductList {
         if (session.getAttribute("user_id") == null) {
             return new ModelAndView("redirect:/login");
         }
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "View Product Management");
+
         ModelAndView mav = new ModelAndView("view/inventory/productList");
         List<BEAN_ProductList> category = daoInventory.getCategory();
         mav.addObject("category", category);

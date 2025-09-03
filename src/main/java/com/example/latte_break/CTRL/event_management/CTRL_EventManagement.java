@@ -3,6 +3,7 @@ package com.example.latte_break.CTRL.event_management;
 import com.example.latte_break.BEAN.event_management.BEAN_EventManagement;
 import com.example.latte_break.BEAN.inventory.BEAN_ItemList;
 import com.example.latte_break.BEAN.inventory.BEAN_ProductList;
+import com.example.latte_break.DAO.audit_logs.DAO_AuditLogs;
 import com.example.latte_break.DAO.event_management.DAO_EventManagement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -23,7 +24,8 @@ public class CTRL_EventManagement {
 
     @Autowired
     DAO_EventManagement daoEventManagement;
-
+    @Autowired
+    DAO_AuditLogs daoAuditLogs;
     @RequestMapping("")
     public ModelAndView event_management(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -31,6 +33,9 @@ public class CTRL_EventManagement {
         if (session.getAttribute("user_id") == null) {
             return new ModelAndView("redirect:/login");
         }
+
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "View Event Management");
 
         ModelAndView mav = new ModelAndView("view/event_management/index");
 
@@ -57,6 +62,7 @@ public class CTRL_EventManagement {
         HttpSession session = request.getSession();
 
         int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Add Event");
 
         Map<String, Object> response = new HashMap<>();
         String event_name = bean.getEvent_name();
@@ -99,6 +105,7 @@ public class CTRL_EventManagement {
     public Map<String, Object> editEvent(BEAN_EventManagement bean, HttpServletRequest request) {
         HttpSession session = request.getSession();
         int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Edit Event");
 
         Map<String, Object> response = new HashMap<>();
         String event_name = bean.getEvent_name();
@@ -126,6 +133,8 @@ public class CTRL_EventManagement {
     public Map<String, Object> archiveEvent(BEAN_EventManagement bean, HttpServletRequest request) {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Archived Event");
 
         Map<String, Object> response = new HashMap<>();
 
@@ -156,9 +165,13 @@ public class CTRL_EventManagement {
 
     @RequestMapping("ajax/deleteEvent")
     @ResponseBody
-    public Map<String, Object> deleteEvent(BEAN_EventManagement bean) {
+    public Map<String, Object> deleteEvent(BEAN_EventManagement bean, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         int id = bean.getId();
+
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Delete Event");
 
         int res = daoEventManagement.deleteEvent(id);
         if (res > 0) {
@@ -179,6 +192,9 @@ public class CTRL_EventManagement {
 
         String username = (String) session.getAttribute("username");
         int id = bean.getId();
+
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Restore Event");
 
         int res = daoEventManagement.restoreEvent(username, id);
 

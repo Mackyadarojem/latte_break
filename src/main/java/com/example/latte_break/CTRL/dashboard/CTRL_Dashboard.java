@@ -1,6 +1,7 @@
 package com.example.latte_break.CTRL.dashboard;
 
 import com.example.latte_break.BEAN.event_management.BEAN_EventManagement;
+import com.example.latte_break.DAO.audit_logs.DAO_AuditLogs;
 import com.example.latte_break.DAO.event_management.DAO_EventManagement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -21,6 +22,8 @@ public class CTRL_Dashboard {
     @Autowired
     DAO_EventManagement daoEventManagement;
 
+    @Autowired
+    DAO_AuditLogs daoAuditLogs;
     //DASHBOARD
     @RequestMapping("")
     public ModelAndView home(HttpServletRequest request) {
@@ -28,6 +31,9 @@ public class CTRL_Dashboard {
         if (session.getAttribute("user_id") == null) {
             return new ModelAndView("redirect:/login");
         }
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "View Dashboard");
+
         return new ModelAndView("view/dashboard/index");
     }
 

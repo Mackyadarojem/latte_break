@@ -2,9 +2,12 @@ package com.example.latte_break.CTRL;
 
 import com.example.latte_break.BEAN.inventory.BEAN_ItemList;
 import com.example.latte_break.BEAN.inventory.BEAN_ProductList;
+import com.example.latte_break.DAO.audit_logs.DAO_AuditLogs;
 import com.example.latte_break.DAO.event_management.DAO_EventManagement;
 import com.example.latte_break.DAO.inventory.DAO_ItemList;
 import com.example.latte_break.DAO.inventory.DAO_ProductList;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +27,16 @@ public class CTRL_Archive {
     @Autowired
     DAO_EventManagement daoEventManagement;
 
+    @Autowired
+    DAO_AuditLogs daoAuditLogs;
 
     @RequestMapping("")
-    public ModelAndView viewArchiveItemList() {
+    public ModelAndView viewArchiveItemList(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
+        int user_id_session = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id_session, "View Archive List");
+
         ModelAndView mav = new ModelAndView("view/archive/index");
         List<BEAN_ProductList> category = daoProduct.getCategory();
         List<BEAN_ItemList> itemCategory = daoItem.getCategory();

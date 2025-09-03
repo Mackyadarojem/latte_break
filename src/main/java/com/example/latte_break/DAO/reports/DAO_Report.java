@@ -1,5 +1,6 @@
 package com.example.latte_break.DAO.reports;
 
+import com.example.latte_break.BEAN.pos.BEAN_POS;
 import com.example.latte_break.BEAN.reports.BEAN_Report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -52,6 +53,27 @@ public class DAO_Report {
                 bean.setExpiration_date(rs.getString("expiration_date"));
                 bean.setStock(rs.getString("stock"));
                 bean.setUnit_measurement(rs.getString("unit_measurement"));
+                return bean;
+            }
+        });
+    }
+
+    public List<BEAN_POS> getProductInvoice(){
+        String sql = "SELECT i.product_price, i.product_discount, i.size,\n" +
+                "i.add_ons, i.quantity, p.name, c.category\n" +
+                "FROM tbl_invoice_product i \n" +
+                "INNER JOIN tbl_product p ON i.product_id = p.id " +
+                "INNER JOIN ref_category c ON p.category_id = c.id ";
+        return template.query(sql, new RowMapper<BEAN_POS>() {
+            @Override
+            public BEAN_POS mapRow(ResultSet rs, int rowNum) throws SQLException {
+                BEAN_POS bean = new BEAN_POS();
+                bean.setSize(rs.getString("size"));
+                bean.setProductName(rs.getString("name"));
+                bean.setDiscount(rs.getString("product_discount"));
+                bean.setQuantity(rs.getString("quantity"));
+                bean.setTotalPrice(rs.getString("product_price"));
+                bean.setCategory_name(rs.getString("category"));
                 return bean;
             }
         });

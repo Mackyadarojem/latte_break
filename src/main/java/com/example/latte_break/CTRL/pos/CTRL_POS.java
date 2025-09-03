@@ -94,9 +94,14 @@ public class CTRL_POS {
                 if (!addOns.isEmpty()) {
                     products += "\n " + addOns;
                 }
+
+                daoPos.saveProductInvoice(invoiceNumber, bean.getProductId(), bean.getTotalPrice(),
+                        bean.getDiscount(), addOns, bean.getSize(), bean.getQuantity());
+
             } else {
                 String timeValue = bean.getTimeValue();
                 products += product + " (" + timeValue + " hr/s)";
+
                 int paidSched = daoBilliard.paidSched(bean.getBilliard_id());
             }
 

@@ -13,4 +13,8 @@ public class BEAN_POS {
     private List<BEAN_AddOns> addOns;
     private String timeValue;
     private int billiard_id;
+    private int productId;
+    private String discount;
+    private String size;
+    private String category_name;
 }

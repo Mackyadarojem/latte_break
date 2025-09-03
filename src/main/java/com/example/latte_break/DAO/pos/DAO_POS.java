@@ -121,4 +121,12 @@ public class DAO_POS {
         return 0;
     }
 
+
+    public int saveProductInvoice(String invoice_id, int product_id, String product_price, String product_discount, String add_ons, String size, String quantity){
+        String sql = "INSERT INTO tbl_invoice_product \n" +
+                "(invoice_id, product_id, product_price, product_discount, add_ons, size, quantity) \n" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        return template.update(sql, new Object[]{invoice_id, product_id, product_price, product_discount, add_ons, size, quantity});
+    }
+
 }

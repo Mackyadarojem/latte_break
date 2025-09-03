@@ -186,6 +186,7 @@ public class CTRL_EventManagement {
             result.put("status", "success");
             result.put("message", "Event Successfully Recovered!");
         } else {
+
             result.put("status", "failed");
             result.put("message", "Failed to Recover Event!");
         }

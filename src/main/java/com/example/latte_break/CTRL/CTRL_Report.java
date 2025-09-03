@@ -2,6 +2,7 @@ package com.example.latte_break.CTRL;
 
 import com.example.latte_break.BEAN.inventory.BEAN_ItemList;
 import com.example.latte_break.BEAN.inventory.BEAN_ProductList;
+import com.example.latte_break.BEAN.pos.BEAN_POS;
 import com.example.latte_break.BEAN.reports.BEAN_Report;
 import com.example.latte_break.DAO.inventory.DAO_ItemList;
 import com.example.latte_break.DAO.inventory.DAO_ProductList;
@@ -53,4 +54,20 @@ public class CTRL_Report {
 
         return result;
     }
+
+    @RequestMapping("/ajax/getSalesList")
+    @ResponseBody
+    public Map<String, Object> getSalesList(BEAN_Report bean) {
+        Map<String, Object> result = new HashMap<>();
+        String date_from = bean.getDate_from();
+        String date_to = bean.getDate_to();
+        int category_id = bean.getCategory_id();
+
+        List<BEAN_POS> list = daoReport.getProductInvoice();
+
+        result.put("data", list);
+
+        return result;
+    }
+
 }

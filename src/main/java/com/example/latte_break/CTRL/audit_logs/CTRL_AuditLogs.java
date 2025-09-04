@@ -26,6 +26,9 @@ public class CTRL_AuditLogs {
         ModelAndView mav = new ModelAndView("view/audit_logs/index");
         HttpSession session = request.getSession();
 
+        if (session.getAttribute("user_id") == null) {
+            return new ModelAndView("redirect:/login");
+        }
         int user_id_session = (int) session.getAttribute("user_id");
         daoAuditLogs.saveAuditLogs(user_id_session, "View Audit Logs");
 
@@ -34,10 +37,14 @@ public class CTRL_AuditLogs {
 
     @RequestMapping("/ajax/getAuditLogs")
     @ResponseBody
-    public Map<String, Object> getAuditLogs(){
+    public Map<String, Object> getAuditLogs(BEAN_AuditLogs beanAuditLogs){
         Map<String, Object> response = new HashMap<>();
 
-        List<BEAN_AuditLogs> list = daoAuditLogs.getAuditLogs();
+        String date_from = beanAuditLogs.getDate_from();
+        String date_to = beanAuditLogs.getDate_to();
+        String username = beanAuditLogs.getUsername();
+
+        List<BEAN_AuditLogs> list = daoAuditLogs.getAuditLogs(username, date_from, date_to);
 
         response.put("data", list);
 

@@ -28,11 +28,25 @@ public class DAO_AuditLogs {
         return template.update(sql, new Object[]{user_id, action});
     }
 
-    public List<BEAN_AuditLogs> getAuditLogs(){
-        String sql = "SELECT a.action, a.timestamp, u.username FROM tbl_audit a \n" +
-                "INNER JOIN tbl_user u ON a.user_id = u.id " +
-                "ORDER BY a.id DESC";
-        return template.query(sql, new RowMapper<BEAN_AuditLogs>() {
+    public List<BEAN_AuditLogs> getAuditLogs(String username, String date_from, String date_to){
+        String sql = "SELECT \n" +
+                "    a.action, \n" +
+                "    a.timestamp, \n" +
+                "    u.username\n" +
+                "FROM tbl_audit a\n" +
+                "INNER JOIN tbl_user u ON a.user_id = u.id\n" +
+                "WHERE (? IS NULL OR u.username LIKE ?)\n" +
+                "  AND (\n" +
+                "        (? = '' OR ? = '') \n" +
+                "        OR (DATE_FORMAT(a.timestamp, '%Y%m%d') BETWEEN ? AND ?)\n" +
+                "      )\n" +
+                "ORDER BY a.id DESC;";
+
+        username = (username != null && !username.trim().isEmpty()) ? "%" + username + "%" : null;
+        System.out.println("username >>" + username);
+        System.out.println("date_from >>" + date_from);
+        System.out.println("date_to >>" + date_to);
+        return template.query(sql,new Object[]{username, username, date_from, date_to, date_from, date_to}, new RowMapper<BEAN_AuditLogs>() {
             @Override
             public BEAN_AuditLogs mapRow(ResultSet rs, int rowNum) throws SQLException {
                 BEAN_AuditLogs bean = new BEAN_AuditLogs();

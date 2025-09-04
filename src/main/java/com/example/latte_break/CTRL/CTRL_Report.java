@@ -39,7 +39,9 @@ public class CTRL_Report {
     @RequestMapping("")
     public ModelAndView salesReport(HttpServletRequest request) {
         HttpSession session = request.getSession();
-
+        if (session.getAttribute("user_id") == null) {
+            return new ModelAndView("redirect:/login");
+        }
         int user_id_session = (int) session.getAttribute("user_id");
         daoAuditLogs.saveAuditLogs(user_id_session, "View Reports");
 

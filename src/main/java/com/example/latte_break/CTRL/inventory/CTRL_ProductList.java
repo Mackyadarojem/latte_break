@@ -175,4 +175,15 @@ public class CTRL_ProductList {
 
         return result;
     }
+
+    @RequestMapping("/productList/ajax/getCategory")
+    @ResponseBody
+    public Map<String, Object> getCategory(){
+        Map<String, Object> response = new HashMap<>();
+        List<BEAN_ProductList> list = daoInventory.getCategory();
+
+        response.put("data", list);
+
+        return  response;
+    }
 }

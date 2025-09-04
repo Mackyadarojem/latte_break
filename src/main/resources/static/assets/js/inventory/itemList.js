@@ -582,4 +582,38 @@ $(document).ready(function(){
         });
    }
 
+   function DT_CategoryList(){
+    $("#DT_CategoryList").DataTable().destroy();
+    $("#DT_CategoryList").DataTable({
+        "processing": true,
+        "ajax": {
+           "url": "productList/ajax/getCategory",
+           "type": "POST"
+        },
+        columns: [
+            {
+                data : null,
+                render : function(data, type, row, meta){
+                    return meta.row + 1;
+                }
+            },
+            {data : "category_name"},
+            {
+                data : "category_id",
+                 render : function(data, type, row, meta){
+                    return `<div class="d-flex gap-2">
+                    <button class="btn-primary btn">Edit</button>
+                    <button class="btn-danger btn">Delete</button>
+                    </div>`;
+                 }
+            },
+        ]
+    });
+   }
+
+
+   $("#viewCategory").on("click", function(e){
+        DT_CategoryList();
+        $("#category_modal").modal("show");
+   });
 });

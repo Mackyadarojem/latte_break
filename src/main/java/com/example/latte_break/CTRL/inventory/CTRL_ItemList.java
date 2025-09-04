@@ -1,6 +1,7 @@
 package com.example.latte_break.CTRL.inventory;
 
 import com.example.latte_break.BEAN.inventory.BEAN_ItemList;
+import com.example.latte_break.BEAN.inventory.BEAN_ProductList;
 import com.example.latte_break.DAO.audit_logs.DAO_AuditLogs;
 import com.example.latte_break.DAO.inventory.DAO_ItemList;
 import jakarta.servlet.http.HttpServletRequest;
@@ -227,5 +228,31 @@ public class CTRL_ItemList {
         result.put("data", list);
 
         return result;
+    }
+
+    @RequestMapping("/itemList/ajax/getCategory")
+    @ResponseBody
+    public Map<String, Object> getCategory(){
+        Map<String, Object> response = new HashMap<>();
+        List<BEAN_ItemList> list = daoItem.getCategory();
+        response.put("data", list);
+
+        return  response;
+    }
+
+    @RequestMapping("/itemList/ajax/deleteCategory")
+    @ResponseBody
+    public Map<String, Object> deleteCategory(BEAN_ItemList beanItemList){
+        Map<String, Object> response = new HashMap<>();
+        int id = beanItemList.getId();
+
+        int res = daoItem.deleteItemCategory(id);
+
+        if(res > 0){
+            response.put("status", "success");
+        }else{
+            response.put("status", "failed");
+        }
+        return  response;
     }
 }

@@ -587,7 +587,7 @@ $(document).ready(function(){
     $("#DT_CategoryList").DataTable({
         "processing": true,
         "ajax": {
-           "url": "productList/ajax/getCategory",
+           "url": "itemList/ajax/getCategory",
            "type": "POST"
         },
         columns: [
@@ -603,11 +603,22 @@ $(document).ready(function(){
                  render : function(data, type, row, meta){
                     return `<div class="d-flex gap-2">
                     <button class="btn-primary btn">Edit</button>
-                    <button class="btn-danger btn">Delete</button>
+                    <button data-id="${data}" class="btn-danger deleteCategory btn">Delete</button>
                     </div>`;
                  }
             },
-        ]
+        ],
+        "createdRow": function(row, data, dataIndex) {
+            $(row).find(".deleteCategory").off("click").on("click", function(e){
+                var id = $(this).data("id");
+
+                console.log("id >>" + id);
+
+                $.get("/itemList/ajax/deleteCategory", {id : id}, function(res){
+                    console.log(res);
+                });
+            });
+        }
     });
    }
 

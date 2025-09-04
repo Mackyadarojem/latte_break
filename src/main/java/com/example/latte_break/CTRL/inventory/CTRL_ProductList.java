@@ -186,4 +186,20 @@ public class CTRL_ProductList {
 
         return  response;
     }
+
+    @RequestMapping("/productList/ajax/deleteCategory")
+    @ResponseBody
+    public Map<String, Object> deleteCategory(BEAN_ProductList beanProductList){
+        Map<String, Object> response = new HashMap<>();
+        int id = beanProductList.getId();
+
+        int res = daoInventory.deleteItemCategory(id);
+
+        if(res > 0){
+            response.put("status", "success");
+        }else{
+            response.put("status", "failed");
+        }
+        return  response;
+    }
 }

@@ -241,4 +241,22 @@ public class DAO_ItemList {
         });
     }
 
+    public List<BEAN_ItemList> getAllCriticalItem() {
+        String sql = "SELECT i.name,c.category, i.critical_quantity, i.stock  FROM `tbl_item` i\n" +
+                "INNER JOIN ref_category_item c ON i.category_id = c.id \n" +
+                "WHERE stock <= critical_quantity;";
+
+        return template.query(sql, new RowMapper<BEAN_ItemList>() {
+            @Override
+            public BEAN_ItemList mapRow(ResultSet rs, int rowNum) throws SQLException {
+                BEAN_ItemList bean = new BEAN_ItemList();
+                bean.setName(rs.getString("name"));
+                bean.setQuantity(rs.getString("stock"));
+                bean.setCategory_name(rs.getString("category"));
+                bean.setCritical_quantity(rs.getString("critical_quantity"));
+                return bean;
+            }
+        });
+    }
+
 }

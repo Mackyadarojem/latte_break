@@ -3,6 +3,7 @@ $(document).ready(function () {
     var role_id = $("#role_id").val();
 
     initEventSchedules();
+    initDT_CriticalItem();
 
     function initEventSchedules(){
         $.get("/home/ajax/getAllEvent", function(res){
@@ -53,6 +54,44 @@ $(document).ready(function () {
         });
     }
 
+     function initDT_CriticalItem(){
+            if ($.fn.DataTable.isDataTable("#DT_CriticalQuantity")) {
+                $("#DT_CriticalQuantity").DataTable().clear().destroy();
+            }
+            $("#DT_CriticalQuantity").DataTable({
+                ajax: {
+                    url: "/home/ajax/getAllCriticalItem",
+                    type: "GET",
+                },
+                columns : [
+                    {
+                        data : null,
+                        render : function (data, type ,row, meta){
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        data : "name"
+                    },
+                    {
+                        data : "category_name"
+                    },
+                    {
+                        data : "quantity",
+                        render : function (data, type ,row, meta){
+                            return data ? data : '';
+                        }
+                    },
+                    {
+                        data : "critical_quantity",
+                        render : function (data, type ,row, meta){
+                            return data;
+                        }
+                    },
+                ]
+            });
+        }
+
     function initDT_Event(date){
         if ($.fn.DataTable.isDataTable("#DT_EventList")) {
             $("#DT_EventList").DataTable().clear().destroy();
@@ -93,6 +132,7 @@ $(document).ready(function () {
             ]
         });
     }
+
     var features;
     if(role_id == 1){
          features = [

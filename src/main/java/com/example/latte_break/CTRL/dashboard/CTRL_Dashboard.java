@@ -1,7 +1,9 @@
 package com.example.latte_break.CTRL.dashboard;
 
 import com.example.latte_break.BEAN.event_management.BEAN_EventManagement;
+import com.example.latte_break.BEAN.inventory.BEAN_ItemList;
 import com.example.latte_break.DAO.event_management.DAO_EventManagement;
+import com.example.latte_break.DAO.inventory.DAO_ItemList;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class CTRL_Dashboard {
     @Autowired
     DAO_EventManagement daoEventManagement;
 
+    @Autowired
+    DAO_ItemList daoItemList;
+
     //DASHBOARD
     @RequestMapping("")
     public ModelAndView home(HttpServletRequest request) {
@@ -36,12 +41,24 @@ public class CTRL_Dashboard {
     public Map<String, Object> getAllEvent(BEAN_EventManagement beanEventManagement) {
         Map<String, Object> response = new HashMap<>();
         String date_from = "";
-        if(beanEventManagement.getDate_from() == null){
+        if (beanEventManagement.getDate_from() == null) {
             date_from = "";
-        }else{
+        } else {
             date_from = beanEventManagement.getDate_from();
         }
         List<BEAN_EventManagement> list = daoEventManagement.getAllEvent("", date_from, date_from);
+
+        response.put("data", list);
+
+        return response;
+    }
+
+    @RequestMapping("/ajax/getAllCriticalItem")
+    @ResponseBody
+    public Map<String, Object> getAllCriticalItem() {
+        Map<String, Object> response = new HashMap<>();
+
+        List<BEAN_ItemList> list = daoItemList.getAllCriticalItem();
 
         response.put("data", list);
 

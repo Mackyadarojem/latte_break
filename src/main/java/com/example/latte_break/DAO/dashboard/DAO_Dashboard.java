@@ -17,5 +17,4 @@ public class DAO_Dashboard {
         this.template = template;
     }
 
-
 }

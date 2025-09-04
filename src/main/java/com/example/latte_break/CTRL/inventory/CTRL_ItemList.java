@@ -1,6 +1,8 @@
 package com.example.latte_break.CTRL.inventory;
 
 import com.example.latte_break.BEAN.inventory.BEAN_ItemList;
+import com.example.latte_break.BEAN.inventory.BEAN_ProductList;
+import com.example.latte_break.DAO.audit_logs.DAO_AuditLogs;
 import com.example.latte_break.DAO.inventory.DAO_ItemList;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -21,6 +23,8 @@ import java.util.Objects;
 public class CTRL_ItemList {
     @Autowired
     DAO_ItemList daoItem;
+    @Autowired
+    DAO_AuditLogs daoAuditLogs;
 
     @RequestMapping("itemList")
     public ModelAndView itemList(HttpServletRequest request) {
@@ -28,6 +32,10 @@ public class CTRL_ItemList {
         if (session.getAttribute("user_id") == null) {
             return new ModelAndView("redirect:/login");
         }
+
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "View Item Management");
+
         ModelAndView mav = new ModelAndView("view/inventory/itemList");
         List<BEAN_ItemList> category = daoItem.getCategory();
         mav.addObject("category", category);
@@ -41,6 +49,9 @@ public class CTRL_ItemList {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
         Map<String, Object> result = new HashMap<>();
+
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Add Item");
 
         String name = bean.getName();
         int category_id = bean.getCategory_id();
@@ -96,6 +107,9 @@ public class CTRL_ItemList {
         String username = (String) session.getAttribute("username");
         int res = daoItem.archiveItem(id, username);
 
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Archived Item");
+
         if (res > 0) {
             result.put("status", "success");
             result.put("message", "Item Successfully Archived!");
@@ -126,6 +140,10 @@ public class CTRL_ItemList {
     public Map<String, Object> stockIn(@RequestBody List<BEAN_ItemList> items, HttpServletRequest request) {
         HttpSession session = request.getSession();
         Map<String, Object> result = new HashMap<>();
+
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Stock In");
+
         for (BEAN_ItemList item : items) {
             int id = item.getId();
             String quantity = item.getQuantity();
@@ -177,6 +195,9 @@ public class CTRL_ItemList {
     public Map<String, Object> stockOut(@RequestBody List<BEAN_ItemList> items, HttpServletRequest request) {
         HttpSession session = request.getSession();
 
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Stock Out");
+
         Map<String, Object> result = new HashMap<>();
         for (BEAN_ItemList item : items) {
             String username = (String) session.getAttribute("username");
@@ -207,5 +228,31 @@ public class CTRL_ItemList {
         result.put("data", list);
 
         return result;
+    }
+
+    @RequestMapping("/itemList/ajax/getCategory")
+    @ResponseBody
+    public Map<String, Object> getCategory(){
+        Map<String, Object> response = new HashMap<>();
+        List<BEAN_ItemList> list = daoItem.getCategory();
+        response.put("data", list);
+
+        return  response;
+    }
+
+    @RequestMapping("/itemList/ajax/deleteCategory")
+    @ResponseBody
+    public Map<String, Object> deleteCategory(BEAN_ItemList beanItemList){
+        Map<String, Object> response = new HashMap<>();
+        int id = beanItemList.getId();
+
+        int res = daoItem.deleteItemCategory(id);
+
+        if(res > 0){
+            response.put("status", "success");
+        }else{
+            response.put("status", "failed");
+        }
+        return  response;
     }
 }

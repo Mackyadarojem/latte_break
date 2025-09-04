@@ -2,6 +2,7 @@ package com.example.latte_break.CTRL.inventory;
 
 import com.example.latte_break.BEAN.BEAN_Account;
 import com.example.latte_break.BEAN.inventory.BEAN_ItemList;
+import com.example.latte_break.DAO.audit_logs.DAO_AuditLogs;
 import com.example.latte_break.DAO.inventory.DAO_ArchiveItemList;
 import com.example.latte_break.DAO.inventory.DAO_ItemList;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,8 +21,12 @@ import java.util.Map;
 public class CTRL_ArchiveItemList {
     @Autowired
     DAO_ArchiveItemList daoArchive;
+
     @Autowired
     DAO_ItemList daoItem;
+
+    @Autowired
+    DAO_AuditLogs daoAuditLogs;
     @RequestMapping("archiveItemList")
     public ModelAndView archiveList(HttpServletRequest request) {
 
@@ -55,6 +60,8 @@ public class CTRL_ArchiveItemList {
     public Map<String, Object> restoreItem(BEAN_ItemList bean, HttpServletRequest request){
         HttpSession session = request.getSession();
         Map<String, Object> result = new HashMap<>();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Restore Item");
 
         String username = (String) session.getAttribute("username");
         int id = bean.getId();
@@ -77,6 +84,8 @@ public class CTRL_ArchiveItemList {
     public Map<String, Object> deleteItem(BEAN_ItemList bean, HttpServletRequest request){
         HttpSession session = request.getSession();
         Map<String, Object> result = new HashMap<>();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Delete Item");
 
         int id = bean.getId();
 

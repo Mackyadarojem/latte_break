@@ -2,6 +2,7 @@ package com.example.latte_break.CTRL;
 
 import com.example.latte_break.BEAN.BEAN_Account;
 import com.example.latte_break.DAO.DAO_Account;
+import com.example.latte_break.DAO.audit_logs.DAO_AuditLogs;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -22,6 +23,8 @@ public class CTRL_Account {
     @Autowired
     DAO_Account daoAcc;
 
+    @Autowired
+    DAO_AuditLogs daoAuditLogs;
     //ACCOUNT
     @RequestMapping("accountList")
     public ModelAndView accountList(HttpServletRequest request) {
@@ -29,12 +32,19 @@ public class CTRL_Account {
         if (session.getAttribute("user_id") == null) {
             return new ModelAndView("redirect:/login");
         }
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "View Account Management");
+
         ModelAndView mav = new ModelAndView("view/account/accountList");
         return mav;
     }
 
     @RequestMapping("ajax/addAccount")
-    public @ResponseBody Map<String, String> addAccount(BEAN_Account bean) {
+    public @ResponseBody Map<String, String> addAccount(BEAN_Account bean, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Add Account");
+
         Map<String, String> response = new HashMap<>();
         String username = bean.getUsername();
         String password = bean.getPassword();
@@ -93,7 +103,11 @@ public class CTRL_Account {
     }
 
     @RequestMapping("ajax/updateUserInfo")
-    public @ResponseBody Map<String, String> updateUserInfo(BEAN_Account bean) {
+    public @ResponseBody Map<String, String> updateUserInfo(BEAN_Account bean, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        int user_id_session = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id_session, "Update Account");
+
         Map<String, String> response = new HashMap<>();
         int user_id = bean.getUser_id();
         int role_id = bean.getRole_id();
@@ -126,6 +140,10 @@ public class CTRL_Account {
     public @ResponseBody Map<String, String> archiveUser(BEAN_Account bean, HttpServletRequest request) {
         Map<String, String> response = new HashMap<>();
         HttpSession session = request.getSession();
+
+        int user_id_session = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id_session, "Archived Account");
+
         String username = (String) session.getAttribute("username");
         int id = bean.getUser_id();
         int res = daoAcc.archiveUser(id, username);
@@ -163,7 +181,12 @@ public class CTRL_Account {
 
     @RequestMapping("ajax/restoreAccount")
     @ResponseBody
-    public Map<String, Object> restoreAccount(BEAN_Account bean) {
+    public Map<String, Object> restoreAccount(BEAN_Account bean, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
+        int user_id_session = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id_session, "Restore Account");
+
         Map<String, Object> response = new HashMap<>();
         int id = bean.getUser_id();
         int res = daoAcc.restoreAccount(id);
@@ -179,13 +202,22 @@ public class CTRL_Account {
     }
 
     @RequestMapping("changePass")
-    public ModelAndView changePass() {
+    public ModelAndView changePass(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
+        int user_id_session = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id_session, "View Change Password");
         return new ModelAndView("view/account/changePass");
     }
 
     @RequestMapping("ajax/changePassword")
     @ResponseBody
-    public Map<String, Object> ajaxChangePassword(@RequestParam("currentPassword") String currentPassword, @RequestParam("password") String newPassword, BEAN_Account bean) {
+    public Map<String, Object> ajaxChangePassword(HttpServletRequest request, @RequestParam("currentPassword") String currentPassword, @RequestParam("password") String newPassword, BEAN_Account bean) {
+        HttpSession session = request.getSession();
+
+        int user_id_session = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id_session, "Change Password");
+
         Map<String, Object> response = new HashMap();
         int user_id = bean.getUser_id();
         int matchPass = daoAcc.matchPass(currentPassword, user_id);
@@ -208,7 +240,12 @@ public class CTRL_Account {
 
     @RequestMapping("ajax/resetUser")
     @ResponseBody
-    public Map<String, Object> resetUser(@RequestParam("user_id") int user_id, @RequestParam("username") String username) {
+    public Map<String, Object> resetUser(HttpServletRequest request, @RequestParam("user_id") int user_id, @RequestParam("username") String username) {
+        HttpSession session = request.getSession();
+
+        int user_id_session = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id_session, "Reset User");
+
         Map<String, Object> response = new HashMap<>();
         int res = daoAcc.resetUser(user_id, username);
         if (res > 0) {
@@ -223,7 +260,12 @@ public class CTRL_Account {
 
     @RequestMapping("ajax/deleteAccount")
     @ResponseBody
-    public Map<String, Object> deleteAccount(@RequestParam("id") int id) {
+    public Map<String, Object> deleteAccount(HttpServletRequest request, @RequestParam("id") int id) {
+        HttpSession session = request.getSession();
+
+        int user_id_session = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id_session, "Delete Account");
+
         Map<String, Object> response = new HashMap<>();
         int res = daoAcc.deleteAccount(id);
         if (res > 0) {

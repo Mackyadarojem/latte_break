@@ -123,4 +123,10 @@ public class DAO_ProductList {
         return template.update(sql, available, id);
     }
 
+    public int deleteItemCategory(int id){
+        System.out.println("id >>>" + id);
+        String sql = "UPDATE ref_category SET deleted_at = NOW()\n" +
+                "WHERE id = ?";
+        return template.update(sql, id);
+    }
 }

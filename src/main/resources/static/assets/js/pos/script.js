@@ -155,19 +155,28 @@ $(document).ready(function () {
         let parent = $(this).closest(".cart-item");
         let totalDiv = parent.find(".itemTotal");
         let basePrice = parseFloat(totalDiv.data("base"));
-
+        var id = $(this).data("id");
+        let product2 = product.find(item => item.uniqueId === id);
         if ($(this).is(":checked")) {
             let discounted = basePrice * 0.8;
             let discountAmount = basePrice - discounted;
             totalDiv.data('discount', discountAmount);
             totalDiv.html(`<strong>₱${discounted.toFixed(2)}</strong>`);
-
+            product2.discount = discountAmount;
+            product2.totalPrice = product2.totalPrice - discountAmount;
         } else {
+            let discounted = basePrice * 0.8;
+            let discountAmount = basePrice - discounted;
             totalDiv.data('discount', 0);
             totalDiv.html(`<strong>₱${basePrice.toFixed(2)}</strong>`);
+
+            product2.discount = 0;
+            product2.totalPrice = product2.totalPrice + discountAmount;
         }
         updateDiscount();
         updateTotal();
+
+        console.log(product);
     });
 
     $("#cartContainer").on("click", ".removeItem", function () {
@@ -392,6 +401,9 @@ $(document).ready(function () {
                     discount : $("#totalDiscount").text(),
                     productList: product
                 };
+
+               console.log("product >>", product);
+
                $.ajax({
                    url: '/pos/saveInvoice',
                    type: 'POST',

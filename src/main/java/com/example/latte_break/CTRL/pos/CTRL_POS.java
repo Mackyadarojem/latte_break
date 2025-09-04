@@ -4,6 +4,7 @@ import com.example.latte_break.BEAN.inventory.BEAN_ProductList;
 import com.example.latte_break.BEAN.pos.BEAN_AddOns;
 import com.example.latte_break.BEAN.pos.BEAN_InvoiceRequest;
 import com.example.latte_break.BEAN.pos.BEAN_POS;
+import com.example.latte_break.DAO.audit_logs.DAO_AuditLogs;
 import com.example.latte_break.DAO.billiard.DAO_Billiard;
 import com.example.latte_break.DAO.pos.DAO_POS;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,6 +31,8 @@ public class CTRL_POS {
     @Autowired
     DAO_Billiard daoBilliard;
 
+    @Autowired
+    DAO_AuditLogs daoAuditLogs;
     //POS
     @RequestMapping("pos")
     public ModelAndView pos(HttpServletRequest request) {
@@ -38,6 +41,10 @@ public class CTRL_POS {
         if (session.getAttribute("user_id") == null) {
             return new ModelAndView("redirect:/login");
         }
+
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "View POS");
+
         List<BEAN_ProductList> list = daoPos.getAllProduct();
         List<BEAN_ProductList> category = daoPos.getAllCategory();
 
@@ -65,6 +72,10 @@ public class CTRL_POS {
     @RequestMapping("pos/saveInvoice")
     public Map<String, Object> saveInvoice(@RequestBody BEAN_InvoiceRequest beanList, HttpServletRequest request) {
         HttpSession session = request.getSession();
+
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Save Invoice");
+
         String username = (String) session.getAttribute("username");
         Map<String, Object> result = new HashMap<>();
         String products = "";
@@ -94,9 +105,14 @@ public class CTRL_POS {
                 if (!addOns.isEmpty()) {
                     products += "\n " + addOns;
                 }
+
+                daoPos.saveProductInvoice(invoiceNumber, bean.getProductId(), bean.getTotalPrice(),
+                        bean.getDiscount(), addOns, bean.getSize(), bean.getQuantity());
+
             } else {
                 String timeValue = bean.getTimeValue();
                 products += product + " (" + timeValue + " hr/s)";
+
                 int paidSched = daoBilliard.paidSched(bean.getBilliard_id());
             }
 
@@ -132,6 +148,10 @@ public class CTRL_POS {
     @RequestMapping("pos/voidTransaction")
     public Map<String, Object> voidTransaction(@RequestBody BEAN_InvoiceRequest beanList, HttpServletRequest request) {
         HttpSession session = request.getSession();
+
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Void Transaction");
+
         String username = (String) session.getAttribute("username");
         Map<String, Object> result = new HashMap<>();
         String products = "";

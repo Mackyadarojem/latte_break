@@ -9,4 +9,11 @@ public class BEAN_Dashboard {
     private String event_name;
     private int id;
     private String purpose;
+
+//    products
+
+    private int category_id;
+    private String category_name;
+    private String product_name;
+    private int rn;
 }

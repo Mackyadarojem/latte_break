@@ -1,6 +1,9 @@
 package com.example.latte_break.CTRL.dashboard;
 
+import com.example.latte_break.BEAN.dashboard.BEAN_Dashboard;
 import com.example.latte_break.BEAN.event_management.BEAN_EventManagement;
+import com.example.latte_break.DAO.audit_logs.DAO_AuditLogs;
+import com.example.latte_break.DAO.dashboard.DAO_Dashboard;
 import com.example.latte_break.BEAN.inventory.BEAN_ItemList;
 import com.example.latte_break.DAO.event_management.DAO_EventManagement;
 import com.example.latte_break.DAO.inventory.DAO_ItemList;
@@ -24,6 +27,11 @@ public class CTRL_Dashboard {
     DAO_EventManagement daoEventManagement;
 
     @Autowired
+    DAO_AuditLogs daoAuditLogs;
+
+    @Autowired
+    DAO_Dashboard daoDashboard;
+    @Autowired
     DAO_ItemList daoItemList;
 
     //DASHBOARD
@@ -33,7 +41,16 @@ public class CTRL_Dashboard {
         if (session.getAttribute("user_id") == null) {
             return new ModelAndView("redirect:/login");
         }
-        return new ModelAndView("view/dashboard/index");
+
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "View Dashboard");
+
+        List<BEAN_Dashboard> categoryList =  daoDashboard.getCategoryList();
+        List<BEAN_Dashboard> topProducts =  daoDashboard.getTopProducts();
+        ModelAndView mav = new ModelAndView("view/dashboard/index");
+        mav.addObject("categoryList", categoryList);
+        mav.addObject("topProducts", topProducts);
+        return mav;
     }
 
     @RequestMapping("/ajax/getAllEvent")
@@ -41,9 +58,9 @@ public class CTRL_Dashboard {
     public Map<String, Object> getAllEvent(BEAN_EventManagement beanEventManagement) {
         Map<String, Object> response = new HashMap<>();
         String date_from = "";
-        if (beanEventManagement.getDate_from() == null) {
+        if(beanEventManagement.getDate_from() == null){
             date_from = "";
-        } else {
+        }else{
             date_from = beanEventManagement.getDate_from();
         }
         List<BEAN_EventManagement> list = daoEventManagement.getAllEvent("", date_from, date_from);
@@ -64,4 +81,5 @@ public class CTRL_Dashboard {
 
         return response;
     }
+
 }

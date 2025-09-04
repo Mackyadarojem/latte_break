@@ -17,4 +17,5 @@ public class BEAN_InvoiceRequest {
     private String subTotal;
     private String discount;
     private String transaction;
+
 }

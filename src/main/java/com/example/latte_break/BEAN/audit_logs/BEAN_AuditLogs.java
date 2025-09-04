@@ -9,4 +9,7 @@ public class BEAN_AuditLogs {
     String full_name;
     String action;
     String timestamp;
+
+    String date_from;
+    String date_to;
 }

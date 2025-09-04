@@ -73,7 +73,10 @@
                             </div>
                             <hr>
                             <div class="text-start d-flex align-items-start justify-content-between">
-                                <button id="addItem" class="btn btn-primary"><span>ADD ITEM</span></button>
+                                <div class="d-flex gap-2">
+                                    <button id="addItem" class="btn btn-primary"><span>ADD ITEM</span></button>
+                                    <button id="viewCategory" class="btn btn-primary"><span>MANAGE ITEM CATEGORY</span></button>
+                                </div>
                                 <div class="">
                                     <button id="btnViewAllStock" class="btn btn-primary"><span>View Stock List</span>
                                     </button>
@@ -119,6 +122,7 @@
 <div th:replace="~{view/inventory/modal/stockOutModal :: _stockOutModal}"></div>
 <div th:replace="~{view/inventory/modal/viewStock :: _viewStock}"></div>
 <div th:replace="~{view/inventory/modal/viewAllStock :: _viewAllStock}"></div>
+<div th:replace="~{view/inventory/modal/category_modal :: _category_modal}"></div>
 
 <!-- Helpers -->
 <script src="" th:src="@{/app-assets/vendor/js/helpers.js}"></script>

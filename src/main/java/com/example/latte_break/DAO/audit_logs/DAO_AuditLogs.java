@@ -30,7 +30,8 @@ public class DAO_AuditLogs {
 
     public List<BEAN_AuditLogs> getAuditLogs(){
         String sql = "SELECT a.action, a.timestamp, u.username FROM tbl_audit a \n" +
-                "INNER JOIN tbl_user u ON a.user_id = u.id";
+                "INNER JOIN tbl_user u ON a.user_id = u.id " +
+                "ORDER BY a.id DESC";
         return template.query(sql, new RowMapper<BEAN_AuditLogs>() {
             @Override
             public BEAN_AuditLogs mapRow(ResultSet rs, int rowNum) throws SQLException {

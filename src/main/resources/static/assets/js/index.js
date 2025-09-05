@@ -180,4 +180,25 @@ $(document).ready(function () {
           $('#results').html('<div>No features found.</div>');
         }
       });
+
+    $("#DT_RecentTransaction").DataTable({
+        ajax: {
+            url: "/home/ajax/getRecentTransactions",
+            type: "GET"
+        },
+        columns : [
+            {
+                data : "transaction"
+            },
+            {
+                data : "products"
+            },
+            {
+                data : "transacted_by"
+            },
+            {
+                data : "date"
+            },
+        ]
+    });
 });

@@ -82,4 +82,16 @@ public class CTRL_Dashboard {
         return response;
     }
 
+    @RequestMapping("/ajax/getRecentTransactions")
+    @ResponseBody
+    public Map<String, Object> getRecentTransactions() {
+        Map<String, Object> response = new HashMap<>();
+
+        List<BEAN_Dashboard> list = daoDashboard.getRecentTransaction();
+
+        response.put("data", list);
+
+        return response;
+    }
+
 }

@@ -16,4 +16,10 @@ public class BEAN_Dashboard {
     private String category_name;
     private String product_name;
     private int rn;
+
+//    transaction
+
+    private String transaction;
+    private String transacted_by;
+    private String products;
 }

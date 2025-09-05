@@ -75,47 +75,30 @@
 
                                 <div class="card w-100">
                                     <div class="card-body">
-                                        <h5>Recent Orders</h5>
-                                        <div class="table-responsive"
-                                             style="height: 100%; width: 100%; overflow: hidden;">
-                                            <table class="table table-hover table-striped">
+                                        <h5>Recent Transactions</h5>
+                                        <div class="table-responsive">
+                                            <table id="DT_RecentTransaction" class="table table-hover table-striped">
                                                 <thead>
                                                 <tr>
-                                                    <th>Order No.</th>
-                                                    <th>Table No.</th>
-                                                    <th>Status</th>
-                                                    <th>Total</th>
+                                                    <th>Transaction</th>
+                                                    <th>Products</th>
+                                                    <th>Transacted By</th>
+                                                    <th>Transaction Date and Time</th>
                                                 </tr>
                                                 </thead>
-                                                <tbody style="white-space:nowrap;">
-                                                <tr>
-                                                    <td>Order-20250228-3</td>
-                                                    <td>#3</td>
-                                                    <td class="text-success">Completed</td>
-                                                    <td><strong>₱712</strong><br>10:15am</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Order-20250228-2</td>
-                                                    <td>#1</td>
-                                                    <td class="text-warning">In Progress</td>
-                                                    <td><strong>₱712</strong><br>10:15am</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Order-20250228-1</td>
-                                                    <td>#2</td>
-                                                    <td class="text-danger">Cancelled</td>
-                                                    <td><strong>₱712</strong><br>10:15am</td>
-                                                </tr>
+                                                <tbody>
                                                 </tbody>
                                             </table>
                                         </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a th:href="@{/transactionList}" class="btn w-100 btn-outline-primary">GO TO TRANSACTION LIST</a>
                                     </div>
                                 </div>
                                 <div class="card w-100">
                                     <div class="card-body">
                                         <h5>Item Critical Quantity</h5>
-                                        <div class="table-responsive"
-                                             style="height: 100%; width: 100%; overflow: hidden;">
+                                        <div class="table-responsive">
                                             <table id="DT_CriticalQuantity" class="table table-hover table-striped">
                                                 <thead>
                                                 <tr>
@@ -128,6 +111,9 @@
                                                 </thead>
                                             </table>
                                         </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a th:href="@{/itemList}" class="btn w-100 btn-outline-primary">GO TO ITEM MANAGEMENT</a>
                                     </div>
                                 </div>
                             </div>
@@ -150,9 +136,9 @@
 
                                             </div>
                                         </div>
-                                        <div class="card-footer">
-                                            <a th:href="@{/pos}" class="btn w-100 btn-outline-primary">GO TO POS</a>
-                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a th:href="@{/pos}" class="btn w-100 btn-outline-primary">GO TO POS</a>
                                     </div>
                                 </div>
                                 <div class="card w-100">
@@ -161,6 +147,9 @@
                                             <h4>CALENDAR SCHEDULE</h4>
                                         </div>
                                         <div id="calendar" class="w-100"></div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a th:href="@{/event_management}" class="btn w-100 btn-outline-primary">GO TO TRANSACTION LIST</a>
                                     </div>
                                 </div>
                             </div>

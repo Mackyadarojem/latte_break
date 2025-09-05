@@ -54,13 +54,30 @@ public class DAO_Dashboard {
     }
 
     public List<BEAN_Dashboard> getCategoryList(){
-        String sql = "SELECT id, category FROM ref_category";
+        String sql = "SELECT id, category FROM ref_category \n" +
+                "WHERE deleted_at IS NOT NULL";
         return template.query(sql, new RowMapper<BEAN_Dashboard>() {
             @Override
             public BEAN_Dashboard mapRow(ResultSet rs, int rowNum) throws SQLException {
                 BEAN_Dashboard bean = new BEAN_Dashboard();
                 bean.setCategory_name(rs.getString("category"));
                 bean.setCategory_id(rs.getInt("id"));
+                return bean;
+            }
+        });
+    }
+
+    public List<BEAN_Dashboard> getRecentTransaction(){
+        String sql = "SELECT * FROM tbl_transaction \n" +
+                "ORDER BY id DESC LIMIT 3";
+        return template.query(sql, new RowMapper<BEAN_Dashboard>() {
+            @Override
+            public BEAN_Dashboard mapRow(ResultSet rs, int rowNum) throws SQLException {
+                BEAN_Dashboard bean = new BEAN_Dashboard();
+                bean.setTransaction(rs.getString("transaction"));
+                bean.setTransacted_by(rs.getString("created_by"));
+                bean.setProducts(rs.getString("products"));
+                bean.setDate(rs.getString("created_at"));
                 return bean;
             }
         });

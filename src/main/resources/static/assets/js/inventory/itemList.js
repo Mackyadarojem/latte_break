@@ -602,7 +602,6 @@ $(document).ready(function(){
                 data : "category_id",
                  render : function(data, type, row, meta){
                     return `<div class="d-flex gap-2">
-                    <button class="btn-primary btn">Edit</button>
                     <button data-id="${data}" class="btn-danger deleteCategory btn">Delete</button>
                     </div>`;
                  }
@@ -613,10 +612,23 @@ $(document).ready(function(){
                 var id = $(this).data("id");
 
                 console.log("id >>" + id);
-
-                $.get("/itemList/ajax/deleteCategory", {id : id}, function(res){
-                    console.log(res);
+                $("#category_modal").modal("hide");
+                Swal.fire({
+                  icon: "warning",
+                  title: 'Delete Category',
+                  text: 'Do you want to delete this category?',
+                  showCancelButton: true,
+                }).then(({ value, isConfirmed }) => {
+                  if (isConfirmed) {
+                    $.get("/itemList/ajax/deleteCategory", {id : id}, function(res){
+                        $("#category_modal").modal("show");
+                    });
+                  }else{
+                    $("#category_modal").modal("show");
+                  }
                 });
+
+
             });
         }
     });

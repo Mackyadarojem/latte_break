@@ -634,9 +634,12 @@ $(document).ready(function(){
     });
    }
 
+   $("#btnAddCategoryItem").on("click",function(e){
+       $("#add_category_item_modal").modal("show");
+   });
 
    $("#viewCategory").on("click", function(e){
         DT_CategoryList();
-        $("#category_modal").modal("show");
+        $("#category_item_modal").modal("show");
    });
 });

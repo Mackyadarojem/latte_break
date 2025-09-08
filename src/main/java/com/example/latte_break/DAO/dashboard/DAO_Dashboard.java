@@ -55,7 +55,7 @@ public class DAO_Dashboard {
 
     public List<BEAN_Dashboard> getCategoryList(){
         String sql = "SELECT id, category FROM ref_category \n" +
-                "WHERE deleted_at IS NOT NULL";
+                "WHERE deleted_at IS NULL";
         return template.query(sql, new RowMapper<BEAN_Dashboard>() {
             @Override
             public BEAN_Dashboard mapRow(ResultSet rs, int rowNum) throws SQLException {

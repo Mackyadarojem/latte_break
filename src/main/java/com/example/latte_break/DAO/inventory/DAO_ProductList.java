@@ -40,7 +40,7 @@ public class DAO_ProductList {
 
     public List<BEAN_ProductList> getCategory() {
         String sql = "SELECT id, category FROM ref_category \n" +
-                "WHERE deleted_at = '' ";
+                "WHERE deleted_at IS NULL ";
         return template.query(sql, new RowMapper<BEAN_ProductList>() {
             @Override
             public BEAN_ProductList mapRow(ResultSet rs, int rowNum) throws SQLException {

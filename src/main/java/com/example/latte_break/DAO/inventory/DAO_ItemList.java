@@ -260,10 +260,15 @@ public class DAO_ItemList {
         });
     }
 
-
     public int deleteItemCategory(int id){
         String sql = "UPDATE ref_category_item SET deleted_at = NOW()\n" +
                 "WHERE id = ?";
         return template.update(sql, id);
+    }
+
+    public int addCategory(String category_name){
+        String sql = "INSERT INTO ref_category_item (category) \n" +
+                "VALUES (?) ";
+        return template.update(sql, new Object[]{category_name});
     }
 }

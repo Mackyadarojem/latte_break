@@ -255,4 +255,22 @@ public class CTRL_ItemList {
         }
         return  response;
     }
+
+    @RequestMapping("/itemList/ajax/addCategory")
+    @ResponseBody
+    public Map<String, Object> addCategory(BEAN_ItemList beanItemList){
+        Map<String, Object> response = new HashMap<>();
+
+        String category_name = beanItemList.getCategory_name();
+
+        int res = daoItem.addCategory(category_name);
+
+        if(res > 0){
+            response.put("status", "success");
+        }else{
+            response.put("status", "failed");
+        }
+
+        return  response;
+    }
 }

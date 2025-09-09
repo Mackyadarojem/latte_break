@@ -584,7 +584,7 @@ $(document).ready(function(){
 
    function DT_CategoryList(){
     $("#DT_CategoryList").DataTable().destroy();
-    $("#DT_CategoryList").DataTable({
+    var DT_CategoryList = $("#DT_CategoryList").DataTable({
         "processing": true,
         "ajax": {
            "url": "itemList/ajax/getCategory",
@@ -611,8 +611,7 @@ $(document).ready(function(){
             $(row).find(".deleteCategory").off("click").on("click", function(e){
                 var id = $(this).data("id");
 
-                console.log("id >>" + id);
-                $("#category_modal").modal("hide");
+                $("#category_item_modal").modal("hide");
                 Swal.fire({
                   icon: "warning",
                   title: 'Delete Category',
@@ -621,14 +620,21 @@ $(document).ready(function(){
                 }).then(({ value, isConfirmed }) => {
                   if (isConfirmed) {
                     $.get("/itemList/ajax/deleteCategory", {id : id}, function(res){
-                        $("#category_modal").modal("show");
+                        if (res.status === "success") {
+                            Swal.fire("Category Successfully Deleted!", "", "success").then(() => {
+                                DT_CategoryList.ajax.reload();
+                                $("#category_item_modal").modal("show");
+                            });
+                        } else {
+                            Swal.fire("Failed to Delete Category!", "", "error").then(() => {
+                                $("#category_item_modal").modal("show");
+                            });
+                        }
                     });
                   }else{
-                    $("#category_modal").modal("show");
+                    $("#category_item_modal").modal("show");
                   }
                 });
-
-
             });
         }
     });
@@ -641,5 +647,24 @@ $(document).ready(function(){
    $("#viewCategory").on("click", function(e){
         DT_CategoryList();
         $("#category_item_modal").modal("show");
+   });
+
+   $("#form_addCategoryItem").on("submit", function(e){
+        e.preventDefault();
+        var formData = $(this).serialize();
+        $("#category_item_modal").modal("hide");
+        $("#add_category_item_modal").modal("hide");
+        $.get("/itemList/ajax/addCategory", formData, function(res){
+            if (res.status === "success") {
+                Swal.fire("Category Successfully Added!", "", "success").then(() => {
+                    $("#category_item_modal").modal("show");
+                    DT_CategoryList();
+                });
+            } else {
+                Swal.fire("Failed to Add Category!", "", "error").then(() => {
+                    $("#category_item_modal").modal("show");
+                });
+            }
+        });
    });
 });

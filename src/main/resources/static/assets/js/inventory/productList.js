@@ -246,4 +246,79 @@ $(document).ready(function(){
             $('#singlePrice').attr('required', true);
         }
     })
+
+    $("#viewCategory").on("click", function(){
+        $("#category_product_modal").modal("show");
+        initDT_CategoryList();
+    });
+
+    function initDT_CategoryList(){
+        $("#DT_CategoryList").DataTable().destroy();
+        var DT_CategoryList = $("#DT_CategoryList").DataTable({
+            "processing": true,
+            "ajax": {
+               "url": "productList/ajax/getCategory",
+               "type": "POST"
+            },
+            columns: [
+                {
+                    data : null,
+                    render : function(data, type, row, meta){
+                        return meta.row + 1;
+                    }
+                },
+                {data : "category_name"},
+                {
+                    data : "drink",
+                    render : function(data,type,row){
+                        if(data){
+                            var checked = "checked";
+                        }else{
+                            var checked = "";
+                        }
+                        return `<div class="form-check form-switch">
+                                  <input ${checked} class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                </div>`
+                    }
+                },
+                {
+                    data : "size",
+                    render : function(data,type,row){
+                       return `<div class="form-check">
+                                 <input class="form-check-input" type="radio" name="${row.category_id} + 'size'" id='${row.category_id} + "noSize"'>
+                                 <label class="form-check-label" for='${row.category_id} + "noSize"'>
+                                   No Size
+                                 </label>
+                                </div>
+                                <div class="form-check">
+                                     <input class="form-check-input" type="radio" name="${row.category_id} + 'size'" id='${row.category_id} + "mediumOnly"' >
+                                     <label class="form-check-label" for='${row.category_id} + "mediumOnly"'>
+                                       Medium Only
+                                     </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="${row.category_id} + 'size'" id='${row.category_id} + "largeOnly"' >
+                                    <label class="form-check-label" for='${row.category_id} + "largeOnly"'>
+                                      Large Only
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                   <input class="form-check-input" type="radio" name="${row.category_id} + 'size'" id='${row.category_id} + "mediumAndLarge"' >
+                                   <label class="form-check-label" for='${row.category_id} + "mediumAndLarge"'>
+                                     Medium and Large
+                                   </label>
+                                </div>`;
+                    }
+                },
+                {
+                    data : "category_id",
+                     render : function(data, type, row, meta){
+                        return `<div class="d-flex gap-2">
+                        <button data-id="${data}" class="btn-danger deleteCategory btn">Delete</button>
+                        </div>`;
+                     }
+                },
+            ],
+        });
+    }
 });

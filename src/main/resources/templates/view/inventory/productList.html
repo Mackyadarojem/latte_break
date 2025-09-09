@@ -72,8 +72,9 @@
                                 </form>
                             </div>
                             <hr>
-                            <div class="text-start d-flex align-items-start justify-content-start">
+                            <div class="text-start d-flex gap-2 align-items-start justify-content-start">
                                 <button class="btn addProduct btn-primary"><span>ADD PRODUCT</span></button>
+                                <button id="viewCategory" class="btn btn-primary"><span>MANAGE PRODUCT CATEGORY</span></button>
                             </div>
 
                             <div class="table-responsive">
@@ -103,6 +104,7 @@
 </div>
 
 <div th:replace="~{view/inventory/modal/productModal :: _productModal}"></div>
+<div th:replace="~{view/inventory/modal/category_product_modal :: _category_product_modal}"></div>
 
 <!-- Helpers -->
 <script src="" th:src="@{/app-assets/vendor/js/helpers.js}"></script>

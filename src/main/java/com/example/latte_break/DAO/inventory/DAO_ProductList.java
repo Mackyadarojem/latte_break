@@ -39,7 +39,7 @@ public class DAO_ProductList {
     }
 
     public List<BEAN_ProductList> getCategory() {
-        String sql = "SELECT id, category FROM ref_category \n" +
+        String sql = "SELECT id, category, drink, size FROM ref_category \n" +
                 "WHERE deleted_at IS NULL ";
         return template.query(sql, new RowMapper<BEAN_ProductList>() {
             @Override
@@ -47,6 +47,8 @@ public class DAO_ProductList {
                 BEAN_ProductList bean = new BEAN_ProductList();
                 bean.setCategory_id(rs.getInt("id"));
                 bean.setCategory_name(rs.getString("category"));
+                bean.setDrink(rs.getBoolean("drink"));
+                bean.setSize(rs.getInt("size"));
                 return bean;
             }
         });

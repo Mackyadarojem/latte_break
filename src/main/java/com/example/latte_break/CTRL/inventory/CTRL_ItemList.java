@@ -242,8 +242,13 @@ public class CTRL_ItemList {
 
     @RequestMapping("/itemList/ajax/deleteCategory")
     @ResponseBody
-    public Map<String, Object> deleteCategory(BEAN_ItemList beanItemList){
+    public Map<String, Object> deleteCategory(BEAN_ItemList beanItemList, HttpServletRequest request){
         Map<String, Object> response = new HashMap<>();
+
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Delete Category Item");
+
         int id = beanItemList.getId();
 
         int res = daoItem.deleteItemCategory(id);
@@ -258,9 +263,11 @@ public class CTRL_ItemList {
 
     @RequestMapping("/itemList/ajax/addCategory")
     @ResponseBody
-    public Map<String, Object> addCategory(BEAN_ItemList beanItemList){
+    public Map<String, Object> addCategory(BEAN_ItemList beanItemList, HttpServletRequest request){
         Map<String, Object> response = new HashMap<>();
-
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Add Category Item");
         String category_name = beanItemList.getCategory_name();
 
         int res = daoItem.addCategory(category_name);

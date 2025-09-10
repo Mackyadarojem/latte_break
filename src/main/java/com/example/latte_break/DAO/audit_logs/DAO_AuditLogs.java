@@ -38,7 +38,7 @@ public class DAO_AuditLogs {
                 "WHERE (? IS NULL OR u.username LIKE ?)\n" +
                 "  AND (\n" +
                 "        (? = '' OR ? = '') \n" +
-                "        OR (DATE_FORMAT(a.timestamp, '%Y%m%d') BETWEEN ? AND ?)\n" +
+                "        OR a.timestamp BETWEEN ? AND ?\n" +
                 "      )\n" +
                 "ORDER BY a.id DESC;";
 

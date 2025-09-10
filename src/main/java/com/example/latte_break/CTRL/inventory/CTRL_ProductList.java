@@ -42,7 +42,11 @@ public class CTRL_ProductList {
 
     @RequestMapping("ajax/addProduct")
     @ResponseBody
-    public Map<String, Object> addProduct(BEAN_ProductList bean) {
+    public Map<String, Object> addProduct(BEAN_ProductList bean, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Add Product");
+
         Map<String, Object> result = new HashMap<>();
         String name = bean.getName();
         int category_id = bean.getCategory_id();
@@ -103,7 +107,11 @@ public class CTRL_ProductList {
 
     @RequestMapping("ajax/deleteProduct")
     @ResponseBody
-    public Map<String, Object> deleteProduct(BEAN_ProductList bean) {
+    public Map<String, Object> deleteProduct(BEAN_ProductList bean, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Delete Product");
+
         Map<String, Object> result = new HashMap<>();
         int id = bean.getId();
 
@@ -124,6 +132,9 @@ public class CTRL_ProductList {
         Map<String, Object> result = new HashMap<>();
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Archive Product");
+
         int id = bean.getId();
         int res = daoInventory.archiveProduct(id, username);
         if (res > 0) {
@@ -141,6 +152,9 @@ public class CTRL_ProductList {
     public Map<String, Object> restoreItem(BEAN_ItemList bean, HttpServletRequest request) {
         HttpSession session = request.getSession();
         Map<String, Object> result = new HashMap<>();
+
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Restore Product");
 
         String username = (String) session.getAttribute("username");
         int id = bean.getId();
@@ -160,8 +174,12 @@ public class CTRL_ProductList {
 
     @RequestMapping("ajax/changeAvailability")
     @ResponseBody
-    public Map<String, Object> changeAvailability(@RequestParam("id") int id, @RequestParam("available") boolean available) {
+    public Map<String, Object> changeAvailability(@RequestParam("id") int id, @RequestParam("available") boolean available, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
+
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Change Availability");
 
         int res = daoInventory.changeAvailability(available, id);
 
@@ -189,9 +207,13 @@ public class CTRL_ProductList {
 
     @RequestMapping("/productList/ajax/deleteCategory")
     @ResponseBody
-    public Map<String, Object> deleteCategory(BEAN_ProductList beanProductList){
+    public Map<String, Object> deleteCategory(BEAN_ProductList beanProductList, HttpServletRequest request){
         Map<String, Object> response = new HashMap<>();
         int id = beanProductList.getId();
+
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Delete Category");
 
         int res = daoInventory.deleteProductCategory(id);
 
@@ -205,10 +227,14 @@ public class CTRL_ProductList {
 
     @RequestMapping("/productList/ajax/updateCategorySize")
     @ResponseBody
-    public Map<String, Object> updateCategorySize(BEAN_ProductList beanProductList){
+    public Map<String, Object> updateCategorySize(BEAN_ProductList beanProductList, HttpServletRequest request){
         Map<String, Object> response = new HashMap<>();
         int id = beanProductList.getId();
         int size = beanProductList.getSize();
+
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Update Category Size");
 
         int res = daoInventory.updateProductCategorySize(id, size);
 
@@ -222,10 +248,14 @@ public class CTRL_ProductList {
 
     @RequestMapping("/productList/ajax/updateCategoryDrink")
     @ResponseBody
-    public Map<String, Object> updateCategoryDrink(BEAN_ProductList beanProductList){
+    public Map<String, Object> updateCategoryDrink(BEAN_ProductList beanProductList, HttpServletRequest request){
         Map<String, Object> response = new HashMap<>();
         int id = beanProductList.getId();
         boolean drink = beanProductList.isDrink();
+
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Update Category Drink");
 
         int res = daoInventory.updateProductCategoryDrink(id, drink);
 
@@ -239,11 +269,15 @@ public class CTRL_ProductList {
 
     @RequestMapping("/productList/ajax/addCategory")
     @ResponseBody
-    public Map<String, Object> addCategory(BEAN_ProductList beanProductList){
+    public Map<String, Object> addCategory(BEAN_ProductList beanProductList, HttpServletRequest request){
         Map<String, Object> response = new HashMap<>();
         String category = beanProductList.getCategory_name();
         boolean drink = beanProductList.isDrink();
         int size = beanProductList.getSize();
+
+        HttpSession session = request.getSession();
+        int user_id = (int) session.getAttribute("user_id");
+        daoAuditLogs.saveAuditLogs(user_id, "Add Category Product");
 
         int res = daoInventory.addProductCategory(category, drink, size);
 

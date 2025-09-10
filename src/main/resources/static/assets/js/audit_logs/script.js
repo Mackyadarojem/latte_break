@@ -9,9 +9,8 @@ $(document).ready(function(){
     function initDT_AuditLogs(){
         if ($.fn.DataTable.isDataTable('#DT_AuditLogs')) {
              $('#DT_AuditLogs').DataTable().destroy();
-             $('#DT_AuditLogs').empty();
         }
-
+        console.log($('#date_from').val());
         $("#DT_AuditLogs").DataTable({
             "ajax": {
                 "url": "audit_logs/ajax/getAuditLogs",
@@ -35,4 +34,8 @@ $(document).ready(function(){
             ]
         });
     }
+
+    $("#btnClear").on("click", function(e){
+        $("#form_search input").val("");
+    });
 });

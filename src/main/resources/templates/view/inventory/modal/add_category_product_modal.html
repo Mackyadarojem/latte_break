@@ -1,0 +1,52 @@
+<div th:fragment="_add_category_product_modal" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="modal fade" id="add_category_product_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="add_category_product_modal_label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="add_category_product_modal_label">Add Category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form_addCategoryProduct">
+                        <div class="d-flex gap-2 flex-column">
+                            <span>Category Name :</span>
+                            <input name="category_name" class="form-control">
+                            <span>Drink :</span>
+                            <div class="form-check form-switch">
+                                <input value="true" class="form-check-input" type="checkbox"  name="drink" id="drink">
+                            </div>
+                            <span>Size :</span>
+                            <div class="form-check">
+                                <input value="1" class="form-check-input" type="radio" name="size" id="noSize">
+                                <label class="form-check-label" for="noSize">
+                                    No Size
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input value="2" class="form-check-input" type="radio" name="size" id="mediumOnly">
+                                <label class="form-check-label" for="mediumOnly">
+                                    Medium Only
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input value="3" class="form-check-input" type="radio" name="size" id="largeOnly">
+                                <label class="form-check-label" for="largeOnly">
+                                    Large Only
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input value="4" class="form-check-input" type="radio" name="size" id="mediumAndLarge">
+                                <label class="form-check-label" for="mediumAndLarge">
+                                    Medium and Large
+                                </label>
+                            </div>
+                            <div class="text-end">
+                                <button class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -126,10 +126,29 @@ public class DAO_ProductList {
         return template.update(sql, available, id);
     }
 
-    public int deleteItemCategory(int id){
+    public int deleteProductCategory(int id){
         System.out.println("id >>>" + id);
         String sql = "UPDATE ref_category SET deleted_at = NOW()\n" +
                 "WHERE id = ?";
         return template.update(sql, id);
     }
+
+    public int updateProductCategorySize(int id, int size){
+        String sql = "UPDATE ref_category SET size = ? \n" +
+                "WHERE id = ?";
+        return template.update(sql, size, id);
+    }
+
+    public int updateProductCategoryDrink(int id, boolean drink){
+        String sql = "UPDATE ref_category SET drink = ? \n" +
+                "WHERE id = ?";
+        return template.update(sql, drink, id);
+    }
+
+    public int addProductCategory(String category_name, boolean drink, int size){
+        String sql = "INSERT INTO ref_category (category, drink, size) \n" +
+                "VALUES (?, ?, ?)";
+        return template.update(sql, new Object[]{category_name, drink, size});
+    }
+
 }

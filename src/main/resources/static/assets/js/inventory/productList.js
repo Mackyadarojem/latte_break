@@ -277,37 +277,44 @@ $(document).ready(function(){
                             var checked = "";
                         }
                         return `<div class="form-check form-switch">
-                                  <input ${checked} class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                  <input ${checked} class="form-check-input" type="checkbox"  name="${row.category_id}_drink" id="${row.category_id}_drink">
                                 </div>`
                     }
                 },
                 {
                     data : "size",
                     render : function(data,type,row){
-                       return `<div class="form-check">
-                                 <input class="form-check-input" type="radio" name="${row.category_id} + 'size'" id='${row.category_id} + "noSize"'>
-                                 <label class="form-check-label" for='${row.category_id} + "noSize"'>
-                                   No Size
-                                 </label>
-                                </div>
-                                <div class="form-check">
-                                     <input class="form-check-input" type="radio" name="${row.category_id} + 'size'" id='${row.category_id} + "mediumOnly"' >
-                                     <label class="form-check-label" for='${row.category_id} + "mediumOnly"'>
-                                       Medium Only
-                                     </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="${row.category_id} + 'size'" id='${row.category_id} + "largeOnly"' >
-                                    <label class="form-check-label" for='${row.category_id} + "largeOnly"'>
-                                      Large Only
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                   <input class="form-check-input" type="radio" name="${row.category_id} + 'size'" id='${row.category_id} + "mediumAndLarge"' >
-                                   <label class="form-check-label" for='${row.category_id} + "mediumAndLarge"'>
-                                     Medium and Large
-                                   </label>
-                                </div>`;
+                        // Determine which option should be checked
+                        let noSizeChecked = row.size == 1 ? "checked" : "";
+                        let mediumOnlyChecked = row.size == 2 ? "checked" : "";
+                        let largeOnlyChecked = row.size == 3 ? "checked" : "";
+                        let mediumAndLargeChecked = row.size == 4 ? "checked" : "";
+
+                        return `
+                            <div class="form-check">
+                                <input value="1" class="form-check-input" type="radio" name="${row.category_id}_size" id="${row.category_id}_noSize" ${noSizeChecked}>
+                                <label class="form-check-label" for="${row.category_id}_noSize">
+                                    No Size
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input value="2" class="form-check-input" type="radio" name="${row.category_id}_size" id="${row.category_id}_mediumOnly" ${mediumOnlyChecked}>
+                                <label class="form-check-label" for="${row.category_id}_mediumOnly">
+                                    Medium Only
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input value="3" class="form-check-input" type="radio" name="${row.category_id}_size" id="${row.category_id}_largeOnly" ${largeOnlyChecked}>
+                                <label class="form-check-label" for="${row.category_id}_largeOnly">
+                                    Large Only
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input value="4" class="form-check-input" type="radio" name="${row.category_id}_size" id="${row.category_id}_mediumAndLarge" ${mediumAndLargeChecked}>
+                                <label class="form-check-label" for="${row.category_id}_mediumAndLarge">
+                                    Medium and Large
+                                </label>
+                            </div>`;
                     }
                 },
                 {
@@ -319,6 +326,81 @@ $(document).ready(function(){
                      }
                 },
             ],
+            "createdRow": function(row, data, dataIndex) {
+                $(row).find(`input[name="${data.category_id}_size"]`)
+                .off("change")
+                .on("change", function(e){
+                    var size = $(this).val();
+                    var id = data.category_id;
+
+                    $.get("productList/ajax/updateCategorySize", {size : size, id : id}, function(res){
+                        console.log(res);
+                    });
+                });
+
+                $(row).find(`input[name="${data.category_id}_drink"]`)
+                .off("change")
+                .on("change", function(e){
+                    var drink;
+
+                    if ($(this).is(":checked")) {
+                        drink = true;
+                    }else{
+                        drink = false;
+                    }
+                    var id = data.category_id;
+                    console.log(drink);
+
+                    $.get("productList/ajax/updateCategoryDrink", {drink : drink, id : id}, function(res){
+                        console.log(res);
+                    });
+                });
+
+                $(row).find(".deleteCategory").off("click").on("click", function(e){
+                    var id = $(this).data("id");
+
+                    $("#category_product_modal").modal("hide");
+                    Swal.fire({
+                      icon: "warning",
+                      title: 'Delete Category',
+                      text: 'Do you want to delete this category?',
+                      showCancelButton: true,
+                    }).then(({ value, isConfirmed }) => {
+                      if (isConfirmed) {
+                        $.get("/productList/ajax/deleteCategory", {id : id}, function(res){
+                            if (res.status === "success") {
+                                Swal.fire("Category Successfully Deleted!", "", "success").then(() => {
+                                    DT_CategoryList.ajax.reload();
+                                    $("#category_product_modal").modal("show");
+                                });
+                            } else {
+                                Swal.fire("Failed to Delete Category!", "", "error").then(() => {
+                                    $("#category_product_modal").modal("show");
+                                });
+                            }
+                        });
+                      }else{
+                        $("#category_product_modal").modal("show");
+                      }
+                    });
+                });
+            }
         });
     }
+
+    $("#btnAddCategoryProduct").on("click", function(e){
+        $("#add_category_product_modal").modal("show");
+    });
+
+    $("#form_addCategoryProduct").on("submit", function(e){
+        e.preventDefault();
+
+        var formData = $(this).serialize();
+
+        $.get("/productList/ajax/addCategory", formData, function(res){
+            console.log(res);
+        });
+
+        console.log(formData);
+    });
 });

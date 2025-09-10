@@ -193,7 +193,59 @@ public class CTRL_ProductList {
         Map<String, Object> response = new HashMap<>();
         int id = beanProductList.getId();
 
-        int res = daoInventory.deleteItemCategory(id);
+        int res = daoInventory.deleteProductCategory(id);
+
+        if(res > 0){
+            response.put("status", "success");
+        }else{
+            response.put("status", "failed");
+        }
+        return  response;
+    }
+
+    @RequestMapping("/productList/ajax/updateCategorySize")
+    @ResponseBody
+    public Map<String, Object> updateCategorySize(BEAN_ProductList beanProductList){
+        Map<String, Object> response = new HashMap<>();
+        int id = beanProductList.getId();
+        int size = beanProductList.getSize();
+
+        int res = daoInventory.updateProductCategorySize(id, size);
+
+        if(res > 0){
+            response.put("status", "success");
+        }else{
+            response.put("status", "failed");
+        }
+        return  response;
+    }
+
+    @RequestMapping("/productList/ajax/updateCategoryDrink")
+    @ResponseBody
+    public Map<String, Object> updateCategoryDrink(BEAN_ProductList beanProductList){
+        Map<String, Object> response = new HashMap<>();
+        int id = beanProductList.getId();
+        boolean drink = beanProductList.isDrink();
+
+        int res = daoInventory.updateProductCategoryDrink(id, drink);
+
+        if(res > 0){
+            response.put("status", "success");
+        }else{
+            response.put("status", "failed");
+        }
+        return  response;
+    }
+
+    @RequestMapping("/productList/ajax/addCategory")
+    @ResponseBody
+    public Map<String, Object> addCategory(BEAN_ProductList beanProductList){
+        Map<String, Object> response = new HashMap<>();
+        String category = beanProductList.getCategory_name();
+        boolean drink = beanProductList.isDrink();
+        int size = beanProductList.getSize();
+
+        int res = daoInventory.addProductCategory(category, drink, size);
 
         if(res > 0){
             response.put("status", "success");
